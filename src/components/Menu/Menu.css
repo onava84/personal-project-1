@@ -1,0 +1,12 @@
+.main-menu {
+  background-color: #0087c0;
+  min-height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-menu a {
+  color: white;
+  text-decoration: none;
+}
