@@ -4,6 +4,7 @@ const session = require("express-session");
 const massive = require("massive");
 const { SERVER_PORT, CONNECTION_STRING, SESSION_SECRET } = process.env;
 const { register, login, logout } = require("./controllers/authController");
+const { createTournament } = require("./controllers/tourController");
 const app = express();
 
 app.use(express.json());
@@ -32,14 +33,12 @@ app.use(
 
 // Auth endpoints
 app.post("/auth/register", register);
-
 app.post("/auth/login", login);
-
 app.delete("/auth/logout", logout);
 
 // Functionality endpoints
 app.get("/api/tournaments");
-app.post("/api/tournament");
+app.post("/api/tournament", createTournament);
 app.put("/api/tournament");
 app.delete("/api/tournament");
 app.get("/api/matches");

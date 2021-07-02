@@ -9,21 +9,20 @@ const register = async (req, res) => {
         username,
       });
       const count = +existingUsers[0].count;
-      console.log(count);
       if (count === 1) {
         res.status(400).send("The username is already taken");
       } else {
         const hash = await bcrypt.hash(password, 10);
-        await db.auth.add_user({
+        const newUser = await db.auth.add_user({
           username,
           hash,
           email,
           first_name,
           last_name,
         });
-        console.log("linea 24");
-        req.session.username = username;
-        res.status(200).send(req.session.username);
+        delete newUser[0].password;
+        req.session.user = newUser[0];
+        res.status(200).send(req.session.user);
       }
     } else {
       res.status(400).send("Username, password and email are required.");
@@ -37,13 +36,14 @@ const login = async (req, res) => {
   try {
     const db = req.app.get("db");
     const { username, password } = req.body;
-    const selected = db.auth.get_user_by_username({ username });
+    const selected = await db.auth.get_user_by_username({ username });
     const user = selected[0];
     if (user) {
       const areEqual = await bcrypt.compare(password, user.password);
       if (areEqual) {
-        req.session.username = username;
-        res.status(200).send(req.session.username);
+        req.session.user = user;
+        delete user.password;
+        res.status(200).send(req.session.user);
       } else {
         res.status(403).send("Invalid username or password.");
       }
@@ -55,7 +55,10 @@ const login = async (req, res) => {
   }
 };
 
-const logout = (req, res) => {};
+const logout = (req, res) => {
+  req.session.destroy();
+  res.sendStatus(200);
+};
 
 module.exports = {
   register,
