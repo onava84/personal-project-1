@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const register = async (req, res) => {
   try {
     const db = req.app.get("db");
-    const { username, password, email, first_name, last_name } = req.body;
+    const { username, email, password, first_name, last_name } = req.body;
     if (username && password && email) {
       const existingUsers = await db.auth.get_num_users_by_username({
         username,

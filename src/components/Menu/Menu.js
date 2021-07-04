@@ -12,6 +12,12 @@ const Menu = () => {
         <Link to="/create-tournament">
           <li>Create Tournament</li>
         </Link>
+        <Link to="/register">
+          <li>Register</li>
+        </Link>
+        <Link to="/login">
+          <li>Login</li>
+        </Link>
       </ul>
     </nav>
   );

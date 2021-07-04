@@ -13,8 +13,6 @@ const createTournament = async (req, res) => {
     } else {
       res.status(400).send("You need to be logged in");
     }
-    // const db = req.app.get("db");
-    // const {tourName,teamsNumber} = req.body
   } catch (e) {
     res.status(500).send(e);
   }
