@@ -1,6 +1,6 @@
-// import axios from "axios";
 import axios from "axios";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 // import "./CreateTournament.css";
 
 const Register = (props) => {
@@ -8,7 +8,7 @@ const Register = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConf, setPasswordConf] = useState("");
-  const [showError, setShowError] = useState(false);
+  // const [showError, setShowError] = useState(false);
   const [emptyError, setEmptyError] = useState("");
   const [equalPassError, setEqualPassError] = useState("");
   const [duplicatedUserError, setduplicatedUserError] = useState("");
@@ -28,14 +28,15 @@ const Register = (props) => {
     ) {
       setEmptyError("Please fill all the fields..");
     } else {
-      if (password != passwordConf) {
+      if (password !== passwordConf) {
         setEqualPassError("Confirm that you repeat the password");
       } else {
         axios
           .post("/auth/register", { username, email, password })
           .then((response) => {
             console.log(response);
-            // props.history.push('/new');
+
+            props.history.push("/login");
           })
           .catch((e) => {
             if (e) {
@@ -49,9 +50,9 @@ const Register = (props) => {
   return (
     <div>
       <h1>Register component</h1>
-      {emptyError != "" ? <p>{emptyError}</p> : null}
-      {equalPassError != "" ? <p>{equalPassError}</p> : null}
-      {duplicatedUserError != "" ? <p>{duplicatedUserError}</p> : null}
+      {emptyError !== "" ? <p>{emptyError}</p> : null}
+      {equalPassError !== "" ? <p>{equalPassError}</p> : null}
+      {duplicatedUserError !== "" ? <p>{duplicatedUserError}</p> : null}
       <form onSubmit={handleSubmit}>
         <label>
           Username

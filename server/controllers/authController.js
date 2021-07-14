@@ -44,6 +44,7 @@ const login = async (req, res) => {
         req.session.user = user;
         delete user.password;
         res.status(200).send(req.session.user);
+        // console.log(req.session.user);
       } else {
         res.status(403).send("Invalid username or password.");
       }
@@ -60,8 +61,14 @@ const logout = (req, res) => {
   res.sendStatus(200);
 };
 
+const getUser = (req, res) => {
+  const user = req.session.user;
+  res.status(200).send(user);
+};
+
 module.exports = {
   register,
   login,
   logout,
+  getUser,
 };
