@@ -13,6 +13,7 @@ const {
   createTournament,
   createTeam,
   getTournaments,
+  createMatches,
 } = require("./controllers/tourController");
 const app = express();
 
@@ -55,6 +56,7 @@ app.delete("/api/tournament");
 app.post("/api/teams", createTeam);
 // app.post("/api/teams", createTeam)
 
+app.post("/api/matches", createMatches);
 app.get("/api/matches");
 app.put("/api/matches");
 app.delete("/api/matches");

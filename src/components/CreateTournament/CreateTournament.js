@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Typography from "@material-ui/core/Typography";
-import Tournament from "round-robin-tournament";
 
 const CreateTournament = (props) => {
   const username = useSelector((reduxState) => reduxState.username);
@@ -27,6 +26,33 @@ const CreateTournament = (props) => {
   const userId = useSelector((reduxState) => reduxState.id);
   const [tournamentNameError, setTournamentNameError] = useState(false);
   const [matches, setMatches] = useState([]);
+
+  useEffect(() => {
+    getMatches();
+  }, [teams]);
+
+  const getMatches = () => {
+    const allMatches = [];
+    for (let i = 0; i < teams.length; i++) {
+      for (let j = i + 1; j < teams.length; j++) {
+        allMatches.push([teams[i], teams[j]]);
+      }
+    }
+    setMatches(allMatches);
+  };
+
+  const postMatches = (arr) => {
+    for (let i = 0; i < arr.length; i++) {
+      const newMatch = {
+        team_1: arr[i][0],
+        team_2: arr[i][1],
+        tournament_id: tournamentId,
+      };
+      axios.post("/api/matches", newMatch).then(() => {
+        console.log("the match was added correctly");
+      });
+    }
+  };
 
   const handleNameInput = (e) => {
     setTournamentNameField(e.target.value);
@@ -53,22 +79,23 @@ const CreateTournament = (props) => {
   };
 
   //this function will be used when submit the form to check if we have to substract 1 or not
-  const postTournamentAndGetTeams = (toSubstract) => {
+  const postTournamentAndGetTeams = (isEven) => {
     const newObj = {
       tournament_name: tournamentNameField,
-      teams_number: teams.length - toSubstract,
+      teams_number: isEven ? teams.length : teams.length + 1,
     };
     axios.post("/api/tournament", newObj).then((response) => {
       // console.log(response.data[0].tournament_id);
       const id = response.data[0].tournament_id;
       setTournamentId(id);
       //create a list/array of promises
-      createTeamNamesFromTournament(id);
+      createTeamNamesFromTournament(id, isEven);
     });
   };
 
-  function createTeamNamesFromTournament(id) {
-    const promises = teams.map(({ teamName }) => {
+  function createTeamNamesFromTournament(id, isEven) {
+    const adjustedTeams = isEven ? teams : [...teams, { teamName: "Rest" }];
+    const promises = adjustedTeams.map(({ teamName }) => {
       const payload = {
         team_name: teamName,
         tournament_id: id,
@@ -99,15 +126,19 @@ const CreateTournament = (props) => {
       isEven = false;
     }
     if (isEven) {
-      // setMatches(torneo.matches);
-      postTournamentAndGetTeams(0);
+      console.log("# of teams", teams.length);
+      postTournamentAndGetTeams(isEven);
+      postMatches(matches);
     } else {
       setTeams([...teams, { teamName: "Rest" }]); // do this in the backend
-      postTournamentAndGetTeams(1);
+      console.log("# of teams", teams.length);
+      postTournamentAndGetTeams(isEven);
+      postMatches(matches);
     }
   };
 
   console.log(teams);
+  console.log(matches);
 
   return (
     <div>

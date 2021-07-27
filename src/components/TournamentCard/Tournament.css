@@ -1,0 +1,6 @@
+.displayed-items {
+  width: 300px;
+  height: 150px;
+  border: solid 2px black;
+  display: inline-block;
+}

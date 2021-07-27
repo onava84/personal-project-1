@@ -46,8 +46,28 @@ const getTournaments = async (req, res) => {
   }
 };
 
+const createMatches = async (req, res) => {
+  try {
+    if (req.session.user) {
+      const db = req.app.get("db");
+      const { team_1, team_2, tournament_id } = req.body;
+      const addedMatch = await db.matches.create_matches({
+        team_1,
+        team_2,
+        tournament_id,
+      });
+      res.status(200).send(addedMatch);
+    } else {
+      res.status(400).send("You need to be logged in");
+    }
+  } catch (e) {
+    res.status(500).send(e);
+  }
+};
+
 module.exports = {
   createTournament,
   createTeam,
   getTournaments,
+  createMatches,
 };

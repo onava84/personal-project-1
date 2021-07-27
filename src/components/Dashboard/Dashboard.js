@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@material-ui/core";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import axios from "axios";
+import TournamentCard from "../TournamentCard/TournamentCard";
+import "./Dashboard.css";
 
 const Dashboard = (props) => {
   const username = useSelector((reduxState) => reduxState.username);
@@ -21,14 +23,16 @@ const Dashboard = (props) => {
       });
   }, []);
 
+  console.log(tournaments);
+
   const tournamentsMap = tournaments.map((e) => {
-    return <p>{e.tournament_name}</p>;
+    return <TournamentCard name={e.tournament_name} id={e.tournament_id} />;
   });
   return (
     <div>
       <h1>Dashboard component</h1>
       <p>Es h2 con {username}</p>
-      <p>{tournamentsMap}</p>
+      <div className="tournament-card">{tournamentsMap}</div>
     </div>
   );
 };
