@@ -31,6 +31,10 @@ const CreateTournament = (props) => {
     getMatches();
   }, [teams]);
 
+  useEffect(() => {
+    postMatches();
+  }, [matches]);
+
   const getMatches = () => {
     const allMatches = [];
     for (let i = 0; i < teams.length; i++) {
@@ -41,11 +45,11 @@ const CreateTournament = (props) => {
     setMatches(allMatches);
   };
 
-  const postMatches = (arr) => {
-    for (let i = 0; i < arr.length; i++) {
+  const postMatches = () => {
+    for (let i = 0; i < matches.length; i++) {
       const newMatch = {
-        team_1: arr[i][0],
-        team_2: arr[i][1],
+        team_1: matches[i][0].team_id,
+        team_2: matches[i][1].team_id,
         tournament_id: tournamentId,
       };
       axios.post("/api/matches", newMatch).then(() => {
@@ -128,12 +132,10 @@ const CreateTournament = (props) => {
     if (isEven) {
       console.log("# of teams", teams.length);
       postTournamentAndGetTeams(isEven);
-      postMatches(matches);
     } else {
       setTeams([...teams, { teamName: "Rest" }]); // do this in the backend
       console.log("# of teams", teams.length);
       postTournamentAndGetTeams(isEven);
-      postMatches(matches);
     }
   };
 

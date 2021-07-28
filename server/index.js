@@ -14,6 +14,8 @@ const {
   createTeam,
   getTournaments,
   createMatches,
+  getMatches,
+  getSingleTournament,
 } = require("./controllers/tourController");
 const app = express();
 
@@ -49,6 +51,7 @@ app.get("/auth/user", getUser);
 
 // Functionality endpoints
 app.get("/api/tournaments", getTournaments);
+app.get("/api/tournament/:id", getSingleTournament);
 app.post("/api/tournament", createTournament);
 app.put("/api/tournament");
 app.delete("/api/tournament");
@@ -57,7 +60,7 @@ app.post("/api/teams", createTeam);
 // app.post("/api/teams", createTeam)
 
 app.post("/api/matches", createMatches);
-app.get("/api/matches");
+app.get("/api/matches", getMatches);
 app.put("/api/matches");
 app.delete("/api/matches");
 

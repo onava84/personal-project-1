@@ -23,10 +23,16 @@ const Dashboard = (props) => {
       });
   }, []);
 
-  console.log(tournaments);
+  // console.log(tournaments);
 
   const tournamentsMap = tournaments.map((e) => {
-    return <TournamentCard name={e.tournament_name} id={e.tournament_id} />;
+    return (
+      <TournamentCard
+        name={e.tournament_name}
+        id={e.tournament_id}
+        key={e.tournament_id}
+      />
+    );
   });
   return (
     <div>

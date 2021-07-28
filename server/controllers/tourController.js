@@ -46,6 +46,19 @@ const getTournaments = async (req, res) => {
   }
 };
 
+const getSingleTournament = async (req, res) => {
+  try {
+    const db = req.app.get("db");
+    const { id } = req.params;
+    const tournament = await db.tournaments.get_single_tournament({
+      id,
+    });
+    res.status(200).send(tournament);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+};
+
 const createMatches = async (req, res) => {
   try {
     if (req.session.user) {
@@ -65,9 +78,26 @@ const createMatches = async (req, res) => {
   }
 };
 
+const getMatches = async (req, res) => {
+  try {
+    if (req.session.user) {
+      const db = req.app.get("db");
+      const { tournament_id } = req.query;
+      const filteredMatches = await db.matches.get_matches({ tournament_id });
+      res.status(200).send(filteredMatches);
+    } else {
+      res.status(400).send("You need to be logged in");
+    }
+  } catch (e) {
+    res.status(500).send(e);
+  }
+};
+
 module.exports = {
   createTournament,
   createTeam,
   getTournaments,
+  getSingleTournament,
   createMatches,
+  getMatches,
 };
