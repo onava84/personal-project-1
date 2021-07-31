@@ -1,11 +1,9 @@
-import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
-import { Button } from "@material-ui/core";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
 import axios from "axios";
+import Match from "../Match/Match";
+import "./Tournament.css";
 
 const Tournament = (props) => {
-  const [tournamentName, setTournamentName] = useState("");
   const [matches, setMatches] = useState([]);
 
   useEffect(() => {
@@ -14,17 +12,20 @@ const Tournament = (props) => {
       .then((res) => {
         setMatches(res.data);
       });
-    axios.get(`/api/tournament/${props.match.params.id}`).then((res) => {
-      setTournamentName(res.data[0].tournament_name);
-    });
   }, []);
 
   console.log(matches);
+  const tourName = matches.length > 0 ? matches[0].tournament_name : null;
 
-  const matchesMap = matches.map((e, i) => {
+  const matchesMap = matches.map((e, i, a) => {
     return (
-      <div key={e.match_id}>
-        {e.team_1} VS {e.team_2}
+      <div>
+        <Match
+          match_id={e.match_id}
+          team1name={e.team_1_name}
+          team2name={e.team_2_name}
+          key={e.match_id}
+        />
       </div>
     );
   });
@@ -32,7 +33,7 @@ const Tournament = (props) => {
   return (
     <div className="displayed-items">
       <h2>Tournament name:</h2>
-      <h1>{tournamentName}</h1>
+      {tourName}
       {matchesMap}
     </div>
   );

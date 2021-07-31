@@ -14,6 +14,6 @@ export default (
     <Route path="/create-tournament" component={CreateTournament} />
     <Route path="/register" component={Register} />
     <Route path="/login" component={Login} />
-    <Route path="/tournaments/:id" component={Tournament} />
+    <Route path="/admin/tournaments/:id" component={Tournament} />
   </Switch>
 );

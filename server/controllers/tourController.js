@@ -37,7 +37,7 @@ const createTeam = async (req, res) => {
 const getTournaments = async (req, res) => {
   try {
     const db = req.app.get("db");
-    console.log(req.session.user.id);
+    // console.log(req.session.user.id);
     const idToGet = req.session.user.id;
     const alltournaments = await db.tournaments.get_tournaments(idToGet);
     res.status(200).send(alltournaments);
@@ -84,6 +84,7 @@ const getMatches = async (req, res) => {
       const db = req.app.get("db");
       const { tournament_id } = req.query;
       const filteredMatches = await db.matches.get_matches({ tournament_id });
+      // console.log(tournament_id, filteredMatches);
       res.status(200).send(filteredMatches);
     } else {
       res.status(400).send("You need to be logged in");
@@ -93,6 +94,30 @@ const getMatches = async (req, res) => {
   }
 };
 
+const deleteTournament = async (req, res) => {
+  try {
+    const db = req.app.get("db");
+    const { id } = req.params;
+    await db.matches.delete_matches({ id });
+    await db.teams.delete_teams({ id });
+    await db.tournaments.delete_tournament({ id });
+    res.sendStatus(200);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+};
+
+// const deleteMatches = async (req, res) => {
+//   try {
+//     const db = req.app.get("db");
+//     const { tournament_id } = req.params;
+//     await db.matches.delete_matches({ tournament_id });
+//     res.sendStatus(200);
+//   } catch (e) {
+//     res.status(500).send(e);
+//   }
+// };
+
 module.exports = {
   createTournament,
   createTeam,
@@ -100,4 +125,6 @@ module.exports = {
   getSingleTournament,
   createMatches,
   getMatches,
+  deleteTournament,
+  // deleteMatches,
 };

@@ -16,6 +16,7 @@ const {
   createMatches,
   getMatches,
   getSingleTournament,
+  deleteTournament,
 } = require("./controllers/tourController");
 const app = express();
 
@@ -54,15 +55,16 @@ app.get("/api/tournaments", getTournaments);
 app.get("/api/tournament/:id", getSingleTournament);
 app.post("/api/tournament", createTournament);
 app.put("/api/tournament");
-app.delete("/api/tournament");
+app.delete("/api/tournament/:id", deleteTournament);
 
 app.post("/api/teams", createTeam);
+// app.delete("/api/teams/:id", deleteTournament);
 // app.post("/api/teams", createTeam)
 
 app.post("/api/matches", createMatches);
 app.get("/api/matches", getMatches);
 app.put("/api/matches");
-app.delete("/api/matches");
+// app.delete("/api/matches/:tournament_id", deleteMatches);
 
 app.listen(SERVER_PORT, () =>
   console.log(`server running on port ${SERVER_PORT}`)

@@ -23,6 +23,13 @@ const Dashboard = (props) => {
       });
   }, []);
 
+  const deleteTournament = (id) => {
+    const tourToBeRemoved = tournaments.findIndex((e) => {
+      return e.id === id;
+    });
+    setTournaments(tournaments.splice(tourToBeRemoved, 1));
+  };
+
   // console.log(tournaments);
 
   const tournamentsMap = tournaments.map((e) => {
@@ -31,9 +38,11 @@ const Dashboard = (props) => {
         name={e.tournament_name}
         id={e.tournament_id}
         key={e.tournament_id}
+        deleteTournament={deleteTournament}
       />
     );
   });
+
   return (
     <div>
       <h1>Dashboard component</h1>

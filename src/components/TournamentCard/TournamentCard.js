@@ -8,10 +8,21 @@ import "./Tournament.css";
 import { Link } from "react-router-dom";
 
 const TournamentCard = (props) => {
+  const clickDelete = () => {
+    axios.delete(`/api/tournament/${props.id}`).then((res) => {
+      props.deleteTournament(props.id);
+    });
+  };
+
+  console.log(props);
+
   return (
     <div className="displayed-items">
+      <p className="delete-tour-button" onClick={() => clickDelete()}>
+        X
+      </p>
       <p>{props.name}</p>
-      <Link to={`/tournaments/${props.id}`}>Edit matches</Link>
+      <Link to={`/admin/tournaments/${props.id}`}>Edit matches</Link>
       <button>See schedule</button>
     </div>
   );

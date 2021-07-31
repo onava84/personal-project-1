@@ -3,8 +3,6 @@ DROP TABLE IF EXISTS tournaments;
 DROP TABLE IF EXISTS teams; 
 DROP TABLE IF EXISTS matches; 
 
-
-
 CREATE TABLE users (
 id SERIAL PRIMARY KEY,
 username VARCHAR(100) NOT NULL,
@@ -29,8 +27,8 @@ tournament_id INT REFERENCES tournaments(tournament_id)
 
 CREATE TABLE matches (
 match_id SERIAL PRIMARY KEY,
-team_1 INTEGER REFERENCES teams(team_id),
-team_2 INTEGER REFERENCES teams(team_id),
+team_1 VARCHAR(100) REFERENCES teams(team_name),
+team_2 VARCHAR(100) REFERENCES teams(team_name),
 tournament_id INTEGER REFERENCES tournaments(tournament_id),
 match_date DATE,
 match_time TIME
