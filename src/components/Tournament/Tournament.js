@@ -14,7 +14,6 @@ const Tournament = (props) => {
       });
   }, []);
 
-  console.log(matches);
   const tourName = matches.length > 0 ? matches[0].tournament_name : null;
 
   const matchesMap = matches.map((e, i, a) => {

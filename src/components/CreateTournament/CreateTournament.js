@@ -31,10 +31,6 @@ const CreateTournament = (props) => {
     getMatches();
   }, [teams]);
 
-  // useEffect(() => {
-  //   postMatches();
-  // }, [matches]);
-
   const getMatches = () => {
     const allMatches = [];
     for (let i = 0; i < teams.length; i++) {
@@ -44,7 +40,7 @@ const CreateTournament = (props) => {
     }
     setMatches(allMatches);
   };
-
+  ////// this is the code I should fix using promises
   const postMatches = () => {
     for (let i = 0; i < matches.length; i++) {
       const newMatch = {
@@ -57,7 +53,26 @@ const CreateTournament = (props) => {
       });
     }
   };
-
+  // function postMatches() {
+  //   const promises = matches.map((e, i, a) => {
+  //     console.log(e);
+  //     const payload = {
+  //       team_1: e[0].team_id,
+  //       team_2: e[1].team_id,
+  //       tournament_id: e[0].tournament_id,
+  //     };
+  //     return axios.post("/api/matches", payload);
+  //   });
+  //   Promise.all(promises)
+  //     .then((res) => {
+  //       console.log(res);
+  //       console.log("the teams are posted");
+  //     })
+  //     .catch(() => {
+  //       console.log("this is the catch of the postAllMatches");
+  //     });
+  // }
+  ////// here ends the matches I want to post
   const handleNameInput = (e) => {
     setTournamentNameField(e.target.value);
   };
@@ -132,10 +147,12 @@ const CreateTournament = (props) => {
     if (isEven) {
       console.log("# of teams", teams.length);
       postTournamentAndGetTeams(isEven);
+      // postMatches();
     } else {
       setTeams([...teams, { teamName: "Rest" }]); // do this in the backend
       console.log("# of teams", teams.length);
       postTournamentAndGetTeams(isEven);
+      // postMatches();
     }
   };
 

@@ -14,7 +14,7 @@ const TournamentCard = (props) => {
     });
   };
 
-  console.log(props);
+  // console.log(props);
 
   return (
     <div className="displayed-items">
