@@ -31,7 +31,8 @@ const CreateTournament = (props) => {
     getMatches();
   }, [teams]);
 
-  const getMatches = () => {
+  //creating the matches and put it in matches array
+  const getMatches = async () => {
     const allMatches = [];
     for (let i = 0; i < teams.length; i++) {
       for (let j = i + 1; j < teams.length; j++) {
@@ -39,40 +40,11 @@ const CreateTournament = (props) => {
       }
     }
     setMatches(allMatches);
+    console.log(allMatches, "TODOS LOS PARTIDOS");
+    const response = await axios.post("/api/matches", allMatches);
+    console.log(response, "RESPUESTA DE GUARDAR MATCHES");
   };
-  ////// this is the code I should fix using promises
-  const postMatches = () => {
-    for (let i = 0; i < matches.length; i++) {
-      const newMatch = {
-        team_1: matches[i][0].team_id,
-        team_2: matches[i][1].team_id,
-        tournament_id: tournamentId,
-      };
-      axios.post("/api/matches", newMatch).then(() => {
-        console.log("the match was added correctly");
-      });
-    }
-  };
-  // function postMatches() {
-  //   const promises = matches.map((e, i, a) => {
-  //     console.log(e);
-  //     const payload = {
-  //       team_1: e[0].team_id,
-  //       team_2: e[1].team_id,
-  //       tournament_id: e[0].tournament_id,
-  //     };
-  //     return axios.post("/api/matches", payload);
-  //   });
-  //   Promise.all(promises)
-  //     .then((res) => {
-  //       console.log(res);
-  //       console.log("the teams are posted");
-  //     })
-  //     .catch(() => {
-  //       console.log("this is the catch of the postAllMatches");
-  //     });
-  // }
-  ////// here ends the matches I want to post
+
   const handleNameInput = (e) => {
     setTournamentNameField(e.target.value);
   };
@@ -112,36 +84,44 @@ const CreateTournament = (props) => {
     });
   };
 
-  function createTeamNamesFromTournament(id, isEven) {
+  async function createTeamNamesFromTournament(id, isEven) {
     const adjustedTeams = isEven ? teams : [...teams, { teamName: "Rest" }];
-    const promises = adjustedTeams.map(({ teamName }) => {
-      const payload = {
-        team_name: teamName,
-        tournament_id: id,
-      };
-      return axios.post("/api/teams", payload);
-    });
+    // const promises = adjustedTeams.map(({ teamName }) => {
+    //   const payload = {
+    //     team_name: teamName,
+    //     tournament_id: id,
+    //   };
+
+    // });
+
+    // Mandar el array y que sea el back el que itere el array y guarde cada equipo
+    // En el back, que te devuelva el array de equipos que ha guardado
+
+    await axios.post("/api/teams", { teams: adjustedTeams });
+
+    // Al tener la promesa de arriba el await, esto solo se ejecuta cuando se resuelve la promesa
+    setTeams(adjustedTeams);
 
     // this Promise.all is waiting for ALL of the promises that we called in the previous step to finish.
     // when they're finished the .then will then fire with an array of all the responses of those promises.
-    Promise.all(promises)
-      .then((res) => {
-        // res is an array of axios responses (response.data)
-        const newTeams = res.map(({ data }) => data[0]);
-        setTeams(newTeams);
-        console.log("teams", newTeams);
-      })
-      .catch(() => {
-        console.log("hubo un problema agregando el equipo");
-      });
+    // Promise.all(promises)
+    //   .then((res) => {
+    //     // res is an array of axios responses (response.data)
+    //     const newTeams = res.map(({ data }) => data[0]);
+    //     setTeams(newTeams);
+    //     console.log("teams", newTeams);
+    //   })
+    //   .catch(() => {
+    //     console.log("hubo un problema agregando el equipo");
+    //   });
   }
 
   const handleSubmit = (e) => {
     // console.log("tournament");
     e.preventDefault();
     let isEven = true;
-    if (teams.length % 2 === 0) {
-    } else {
+
+    if (teams.length % 2 !== 0) {
       isEven = false;
     }
     if (isEven) {

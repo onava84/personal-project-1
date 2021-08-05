@@ -22,12 +22,17 @@ const createTournament = async (req, res) => {
   }
 };
 
-const createTeam = async (req, res) => {
+const createTeam = (req, res) => {
   try {
     const db = req.app.get("db");
-    const { team_name, tournament_id } = req.body;
-    console.log(team_name, tournament_id);
-    const team = await db.teams.create_team({ team_name, tournament_id });
+    // Haz console log de req.body para asegurarte como recibes teams
+    const { teams } = req.body;
+
+    teams.forEach((team) => {
+      const { team_name, tournament_id } = team;
+      db.teams.create_team({ team_name, tournament_id });
+    });
+
     res.status(200).send(team);
   } catch (e) {
     res.status(500).send(e);
