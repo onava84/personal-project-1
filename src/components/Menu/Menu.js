@@ -30,6 +30,9 @@ const Menu = (props) => {
       <Link to="/create-tournament">
         <li>Create tournament</li>
       </Link>
+      <Link to="/tournaments">
+        <li>See tournaments</li>
+      </Link>
       <li onClick={() => handleLogOut()}>Logout</li>
     </>
   );
@@ -41,6 +44,9 @@ const Menu = (props) => {
       </Link>
       <Link to="/register">
         <li>Register</li>
+      </Link>
+      <Link to="/tournaments">
+        <li>See tournaments</li>
       </Link>
       <Link to="/login">
         <li>Login</li>

@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Typography from "@material-ui/core/Typography";
+import Tournament from "round-robin-tournament";
 
 const CreateTournament = (props) => {
   const username = useSelector((reduxState) => reduxState.username);
@@ -27,23 +28,36 @@ const CreateTournament = (props) => {
   const [tournamentNameError, setTournamentNameError] = useState(false);
   const [matches, setMatches] = useState([]);
 
-  useEffect(() => {
-    getMatches();
-  }, [teams]);
+  const generateTournament = (teams) => {
+    const tournament = new Tournament(teams);
+    const matches = tournament.matches;
+    console.log(matches);
+    axios
+      .post("/api/matches", matches)
+      .then(() => console.log("post matches axios was called"))
+      .catch(() =>
+        console.log("something went wrong with the axios post of tournament")
+      );
+  };
 
   //creating the matches and put it in matches array
-  const getMatches = async () => {
-    const allMatches = [];
-    for (let i = 0; i < teams.length; i++) {
-      for (let j = i + 1; j < teams.length; j++) {
-        allMatches.push([teams[i], teams[j]]);
-      }
-    }
-    setMatches(allMatches);
-    console.log(allMatches, "TODOS LOS PARTIDOS");
-    const response = await axios.post("/api/matches", allMatches);
-    console.log(response, "RESPUESTA DE GUARDAR MATCHES");
-  };
+  // const createMatches = (newTeams) => {
+  //   const allMatches = [];
+  //   for (let i = 0; i < newTeams.length; i++) {
+  //     for (let j = i + 1; j < newTeams.length; j++) {
+  //       allMatches.push([newTeams[i], newTeams[j]]);
+  //     }
+  //   }
+  //   console.log(allMatches);
+  //   axios
+  //     .post("/api/matches", allMatches)
+  //     .then(() => {
+  //       console.log("post matches axios was called");
+  //     })
+  //     .catch(() => {
+  //       console.log("El post matches no funciono");
+  //     });
+  // };
 
   const handleNameInput = (e) => {
     setTournamentNameField(e.target.value);
@@ -104,16 +118,20 @@ const CreateTournament = (props) => {
 
     // this Promise.all is waiting for ALL of the promises that we called in the previous step to finish.
     // when they're finished the .then will then fire with an array of all the responses of those promises.
-    // Promise.all(promises)
-    //   .then((res) => {
-    //     // res is an array of axios responses (response.data)
-    //     const newTeams = res.map(({ data }) => data[0]);
-    //     setTeams(newTeams);
-    //     console.log("teams", newTeams);
-    //   })
-    //   .catch(() => {
-    //     console.log("hubo un problema agregando el equipo");
-    //   });
+    Promise.all(promises)
+      .then((res) => {
+        // res is an array of axios responses (response.data)
+        const newTeams = res.map(({ data }) => data[0]);
+        console.log(newTeams);
+        ///////
+        setTeams(newTeams);
+        generateTournament(newTeams);
+        ///////
+        console.log("teams", newTeams);
+      })
+      .catch(() => {
+        console.log("hubo un problema agregando el equipo");
+      });
   }
 
   const handleSubmit = (e) => {
