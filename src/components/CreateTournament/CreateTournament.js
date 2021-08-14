@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Typography from "@material-ui/core/Typography";
+import Tournament from "round-robin-tournament";
 
 const CreateTournament = (props) => {
   const username = useSelector((reduxState) => reduxState.username);
@@ -27,52 +28,37 @@ const CreateTournament = (props) => {
   const [tournamentNameError, setTournamentNameError] = useState(false);
   const [matches, setMatches] = useState([]);
 
-  useEffect(() => {
-    getMatches();
-  }, [teams]);
+  const generateTournament = (teams) => {
+    const tournament = new Tournament(teams);
+    const matches = tournament.matches;
+    console.log(matches);
+    axios
+      .post("/api/matches", matches)
+      .then(() => console.log("post matches axios was called"))
+      .catch(() =>
+        console.log("something went wrong with the axios post of tournament")
+      );
+  };
 
-  const getMatches = () => {
-    const allMatches = [];
-    for (let i = 0; i < teams.length; i++) {
-      for (let j = i + 1; j < teams.length; j++) {
-        allMatches.push([teams[i], teams[j]]);
-      }
-    }
-    setMatches(allMatches);
-  };
-  ////// this is the code I should fix using promises
-  const postMatches = () => {
-    for (let i = 0; i < matches.length; i++) {
-      const newMatch = {
-        team_1: matches[i][0].team_id,
-        team_2: matches[i][1].team_id,
-        tournament_id: tournamentId,
-      };
-      axios.post("/api/matches", newMatch).then(() => {
-        console.log("the match was added correctly");
-      });
-    }
-  };
-  // function postMatches() {
-  //   const promises = matches.map((e, i, a) => {
-  //     console.log(e);
-  //     const payload = {
-  //       team_1: e[0].team_id,
-  //       team_2: e[1].team_id,
-  //       tournament_id: e[0].tournament_id,
-  //     };
-  //     return axios.post("/api/matches", payload);
-  //   });
-  //   Promise.all(promises)
-  //     .then((res) => {
-  //       console.log(res);
-  //       console.log("the teams are posted");
+  //creating the matches and put it in matches array
+  // const createMatches = (newTeams) => {
+  //   const allMatches = [];
+  //   for (let i = 0; i < newTeams.length; i++) {
+  //     for (let j = i + 1; j < newTeams.length; j++) {
+  //       allMatches.push([newTeams[i], newTeams[j]]);
+  //     }
+  //   }
+  //   console.log(allMatches);
+  //   axios
+  //     .post("/api/matches", allMatches)
+  //     .then(() => {
+  //       console.log("post matches axios was called");
   //     })
   //     .catch(() => {
-  //       console.log("this is the catch of the postAllMatches");
+  //       console.log("El post matches no funciono");
   //     });
-  // }
-  ////// here ends the matches I want to post
+  // };
+
   const handleNameInput = (e) => {
     setTournamentNameField(e.target.value);
   };
@@ -128,7 +114,11 @@ const CreateTournament = (props) => {
       .then((res) => {
         // res is an array of axios responses (response.data)
         const newTeams = res.map(({ data }) => data[0]);
+        console.log(newTeams);
+        ///////
         setTeams(newTeams);
+        generateTournament(newTeams);
+        ///////
         console.log("teams", newTeams);
       })
       .catch(() => {

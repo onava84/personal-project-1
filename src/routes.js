@@ -6,6 +6,8 @@ import Register from "./components/Register/Register";
 import Login from "./components/Login/Login";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Tournament from "./components/Tournament/Tournament";
+import Tournaments from "./components/Tournaments/Tournaments";
+import SingleTournament from "./components/SingleTournament/SingleTournament";
 
 export default (
   <Switch>
@@ -15,5 +17,7 @@ export default (
     <Route path="/register" component={Register} />
     <Route path="/login" component={Login} />
     <Route path="/admin/tournaments/:id" component={Tournament} />
+    <Route path="/tournaments" component={Tournaments} />
+    <Route path="/tournaments/:id" component={SingleTournament} />
   </Switch>
 );

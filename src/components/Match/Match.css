@@ -1,4 +1,9 @@
-.match-content {
+.match {
   padding: 20px;
   border: solid red 2px;
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+.save-close {
+  display: none;
 }
