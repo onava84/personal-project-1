@@ -39,7 +39,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Login = (props) => {
+const ResetPassword = (props) => {
   const classes = useStyles();
   const [authInfo, setAuthInfo] = useState({ username: "", password: "" });
   const dispatch = useDispatch();
@@ -48,39 +48,55 @@ const Login = (props) => {
   const [accessError, setAccessError] = useState(false);
   const [emptyError, setEmptyError] = useState(false);
 
-  const handleChange = (e) => {
-    setAuthInfo({
-      ...authInfo,
-      [e.target.name]: e.target.value,
-    });
-    // console.log(authInfo);
-  };
+  const [email, setEmail] = useState("");
 
+  // const handleChange = (e) => {
+  //   setAuthInfo({
+  //     ...authInfo,
+  //     [e.target.name]: e.target.value,
+  //   });
+  //   // console.log(authInfo);
+  // };
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   setUsernameError(false);
+  //   setPasswordError(false);
+  //   setAccessError(false);
+  //   if (authInfo.username == "") {
+  //     setUsernameError(true);
+  //   }
+  //   if (authInfo.password == "") {
+  //     setPasswordError(true);
+  //   }
+  //   if (authInfo.username && authInfo.password) {
+  //     // console.log(authInfo.username, authInfo.password);
+  //     axios
+  //       .post("/auth/login", authInfo)
+  //       .then((response) => {
+  //         dispatch(updateUsername(response.data.username));
+  //         dispatch(updateUserId(response.data.id));
+  //         props.history.push("/dashboard");
+  //       })
+  //       .catch(() => {
+  //         setAccessError(true);
+  //       });
+  //   }
+  // };
   const handleSubmit = (e) => {
     e.preventDefault();
-    setUsernameError(false);
-    setPasswordError(false);
-    setAccessError(false);
-    if (authInfo.username == "") {
-      setUsernameError(true);
-    }
-    if (authInfo.password == "") {
-      setPasswordError(true);
-    }
-    if (authInfo.username && authInfo.password) {
-      // console.log(authInfo.username, authInfo.password);
-      axios
-        .post("/auth/login", authInfo)
-        .then((response) => {
-          dispatch(updateUsername(response.data.username));
-          dispatch(updateUserId(response.data.id));
-          props.history.push("/dashboard");
-        })
-        .catch(() => {
-          setAccessError(true);
-        });
-    }
+    const newObj = { email: email };
+    axios
+      .post("/auth/resetpassword", newObj)
+      .then(() => {
+        console.log("se envió bien");
+      })
+      .catch(() => {
+        console.log("hubo algun error");
+      });
   };
+
+  console.log(email);
 
   return (
     <Container className={classes.contenedor}>
@@ -99,32 +115,22 @@ const Login = (props) => {
               className={classes.heading}
               color="secondary"
             >
-              Login
+              Reset password
+            </Typography>
+            <Typography style={{ textAlign: "left" }} color="secondary">
+              To reset your password, please provide your email address.
             </Typography>
             <form noValidate autoComplete="off" onSubmit={handleSubmit}>
               <TextField
                 className={classes.field}
-                name="username"
+                name="Email"
                 variant="outlined"
-                label="Username"
+                label="Email"
                 color="secondary"
                 required
-                onChange={handleChange}
-                error={usernameError}
+                onChange={(e) => setEmail(e.target.value)}
+                // error={usernameError}
                 fullWidth
-              ></TextField>
-              <TextField
-                className={classes.field}
-                color="secondary"
-                type="password"
-                name="password"
-                variant="outlined"
-                label="Password"
-                required
-                fullWidth
-                // onChange={handleChange}
-                onChange={handleChange}
-                error={passwordError}
               ></TextField>
               <Button
                 className={classes.btn}
@@ -136,11 +142,15 @@ const Login = (props) => {
                 fullWidth
                 // onClick={console.log(authInfo)}
               >
-                Submit
+                Send reset instructions
               </Button>
-              <Typography style={{ textAlign: "right", fontSize: 14 }}>
-                <Link href="/#/reset-password" variant="body2">
-                  I forgot my password
+              <Typography
+                style={{ textAlign: "right", fontSize: 14 }}
+                color="secondary"
+              >
+                If you don't have an account{" "}
+                <Link href="/#/register" variant="body2">
+                  register here
                 </Link>
               </Typography>
             </form>
@@ -161,4 +171,4 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+export default ResetPassword;

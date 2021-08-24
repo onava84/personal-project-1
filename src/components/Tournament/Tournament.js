@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Tournament.css";
 import Weeks from "../Weeks/Weeks";
-import Typography from "@material-ui/core/Typography";
+import { Typography, Box } from "@material-ui/core";
 
 const Tournament = (props) => {
   const [matches, setMatches] = useState([]);
@@ -41,14 +41,13 @@ const Tournament = (props) => {
   });
 
   return (
-    <div className="displayed-items">
-      <Typography variant="h4" component="h1" color="secondary" gutterBottom>
-        Tournament name: {tourName}
+    <div>
+      <Typography variant="h4" color="secondary">
+        <Box fontWeight="fontWeightBold" mt={4}>
+          Edit {tourName}
+        </Box>
       </Typography>
-      {/* <h2>Tournament name:</h2>
-      {tourName}
-      {matchesMap} */}
-      {weeksMap}
+      <div className="main-tournament-page">{weeksMap}</div>
     </div>
   );
 };

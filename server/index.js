@@ -8,6 +8,9 @@ const {
   login,
   logout,
   getUser,
+  resetPassword,
+  getUserIdVerify,
+  updatePassword,
 } = require("./controllers/authController");
 const {
   createTournament,
@@ -20,6 +23,8 @@ const {
   updateMatch,
   getSingleMatch,
   getAllTournaments,
+  getMatchesAllUsers,
+  // getSingleTournamentAlUsers,
 } = require("./controllers/tourController");
 const app = express();
 
@@ -52,14 +57,23 @@ app.post("/auth/register", register);
 app.post("/auth/login", login);
 app.delete("/auth/logout", logout);
 app.get("/auth/user", getUser);
+app.post("/auth/resetpassword", resetPassword);
+app.get("/auth/verifyemail/:id", getUserIdVerify);
+app.post("/auth/updatepassword", updatePassword);
+// app.po
 
 // Functionality endpoints
+// For admin users
 app.get("/api/tournaments", getTournaments);
 app.get("/api/tournament/:id", getSingleTournament);
 app.post("/api/tournament", createTournament);
 app.put("/api/tournament");
 app.delete("/api/tournament/:id", deleteTournament);
+//For any user
+// app.get("/api/tournament/:id", getSingleTournamentAlUsers);
 app.get("/api/alltournaments", getAllTournaments);
+app.get("/api/allmatches", getMatchesAllUsers);
+app.get("/api/allmatches/:match_id", getSingleMatch);
 
 app.post("/api/teams", createTeam);
 // app.delete("/api/teams/:id", deleteTournament);

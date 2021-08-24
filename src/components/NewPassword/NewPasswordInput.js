@@ -39,7 +39,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Login = (props) => {
+const NewPasswordInput = (props) => {
   const classes = useStyles();
   const [authInfo, setAuthInfo] = useState({ username: "", password: "" });
   const dispatch = useDispatch();
@@ -47,6 +47,10 @@ const Login = (props) => {
   const [passwordError, setPasswordError] = useState(false);
   const [accessError, setAccessError] = useState(false);
   const [emptyError, setEmptyError] = useState(false);
+
+  ////
+  const [newPassword, setNewPassword] = useState("");
+  const [confNewPassword, setConfNewPassword] = useState("");
 
   const handleChange = (e) => {
     setAuthInfo({
@@ -57,30 +61,12 @@ const Login = (props) => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    setUsernameError(false);
-    setPasswordError(false);
-    setAccessError(false);
-    if (authInfo.username == "") {
-      setUsernameError(true);
-    }
-    if (authInfo.password == "") {
-      setPasswordError(true);
-    }
-    if (authInfo.username && authInfo.password) {
-      // console.log(authInfo.username, authInfo.password);
-      axios
-        .post("/auth/login", authInfo)
-        .then((response) => {
-          dispatch(updateUsername(response.data.username));
-          dispatch(updateUserId(response.data.id));
-          props.history.push("/dashboard");
-        })
-        .catch(() => {
-          setAccessError(true);
-        });
+    if (newPassword === confNewPassword) {
+      // axios.post;
     }
   };
+
+  // console.log(email);
 
   return (
     <Container className={classes.contenedor}>
@@ -99,33 +85,36 @@ const Login = (props) => {
               className={classes.heading}
               color="secondary"
             >
-              Login
+              Reset password
+            </Typography>
+            <Typography style={{ textAlign: "left" }} color="secondary">
+              Select a new password and confirm it.
             </Typography>
             <form noValidate autoComplete="off" onSubmit={handleSubmit}>
               <TextField
                 className={classes.field}
-                name="username"
+                name="password"
                 variant="outlined"
-                label="Username"
+                label="Enter a new password"
                 color="secondary"
+                type="password"
                 required
-                onChange={handleChange}
-                error={usernameError}
+                onChange={(e) => setNewPassword(e.target.value)}
+                // error={usernameError}
                 fullWidth
               ></TextField>
               <TextField
                 className={classes.field}
-                color="secondary"
-                type="password"
-                name="password"
+                name="confpassword"
                 variant="outlined"
-                label="Password"
+                label="Confirm password"
+                color="secondary"
                 required
+                onChange={(e) => setConfNewPassword(e.target.value)}
+                // error={usernameError}
                 fullWidth
-                // onChange={handleChange}
-                onChange={handleChange}
-                error={passwordError}
               ></TextField>
+
               <Button
                 className={classes.btn}
                 type="submit"
@@ -136,11 +125,15 @@ const Login = (props) => {
                 fullWidth
                 // onClick={console.log(authInfo)}
               >
-                Submit
+                Set new password
               </Button>
-              <Typography style={{ textAlign: "right", fontSize: 14 }}>
-                <Link href="/#/reset-password" variant="body2">
-                  I forgot my password
+              <Typography
+                style={{ textAlign: "right", fontSize: 14 }}
+                color="secondary"
+              >
+                If you don't have an account{" "}
+                <Link href="/#/register" variant="body2">
+                  register here
                 </Link>
               </Typography>
             </form>
@@ -161,4 +154,4 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+export default NewPasswordInput;

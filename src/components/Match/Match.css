@@ -1,9 +1,29 @@
 .match {
   padding: 20px;
-  border: solid red 2px;
-  font-family: "Roboto Condensed", sans-serif;
 }
 
-.save-close {
-  display: none;
+.match-1 {
+  /* background-color: #294b7a; */
+  border: solid 1px #294b7a;
+  border-radius: 5px;
+  margin-top: 15px;
+  /* border: none; */
+  color: white;
+  padding: 20px;
+  min-width: 300px;
+}
+
+.picker,
+.buttons {
+  margin-top: 10px;
+}
+
+.teams-name {
+  color: #294b7a;
+  font-weight: bold;
+}
+
+.date,
+.time {
+  color: #294b7a;
 }

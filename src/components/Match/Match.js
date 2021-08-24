@@ -13,6 +13,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import SaveIcon from "@material-ui/icons/Save";
 import { makeStyles } from "@material-ui/core";
 import { format, toDate, parseISO, parse } from "date-fns";
+import { alpha } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
   btn: {
@@ -63,10 +64,12 @@ const Match = (props) => {
   };
 
   return (
-    <div className="match">
+    <div className="match-1">
       <div>
-        {props.match.team_1_name} VS {props.match.team_2_name}
-        <p>
+        <div className="teams-name">
+          {props.match.team_1_name} VS {props.match.team_2_name}
+        </div>
+        <p className="date">
           Date:{" "}
           {match.match_date
             ? // ? format(selectedDate, "LLLL d yyyy")
@@ -74,51 +77,68 @@ const Match = (props) => {
               format(parseISO(match.match_date), "EEEE MMMM d yyyy")
             : "not defined"}
         </p>
-        <p>
+        <p className="time">
           Time:{" "}
           {match.match_time
             ? // ? format(selectedDate, "HH:mm")
               format(parse(match.match_time, "HH:mm:ss", new Date()), "p")
             : "not defined"}
         </p>
-      </div>
-      <div>
-        {editOpen ? (
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <DatePicker
-              disablePast
-              value={selectedDate}
-              onChange={setSelectedDate}
-              label="Select Date"
-            />
-            <TimePicker
-              value={selectedDate}
-              onChange={setSelectedDate}
-              label="Select Time"
-            />
-          </MuiPickersUtilsProvider>
-        ) : (
-          ""
-        )}
-        <Button
-          disableElevation
-          variant="contained"
-          color="primary"
-          onClick={(e) => clickHandler()}
-          startIcon={!editOpen ? <EditIcon /> : null}
-          // className={editOpen ? "cancel" : ""}
-        >
-          {editOpen ? "Cancel" : "Edit Date & Time"}
-        </Button>
-        <Button
-          className={!editOpen ? classes.btn : ""}
-          onClick={(e) => handleSaveClick()}
-          variant="contained"
-          color="secondary"
-          startIcon={<SaveIcon />}
-        >
-          Save
-        </Button>
+
+        <div className="picker">
+          <div>
+            {editOpen ? (
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <div>
+                  <DatePicker
+                    disablePast
+                    value={selectedDate}
+                    onChange={setSelectedDate}
+                    label="Select Date"
+                  />
+                </div>
+                <div>
+                  <TimePicker
+                    value={selectedDate}
+                    onChange={setSelectedDate}
+                    label="Select Time"
+                    color="primary"
+                  />
+                </div>
+              </MuiPickersUtilsProvider>
+            ) : (
+              ""
+            )}
+          </div>
+          <div className="buttons">
+            <Button
+              disableElevation
+              fullWidth
+              variant="contained"
+              color="primary"
+              style={{ marginTop: 15 }}
+              size="large"
+              onClick={(e) => clickHandler()}
+              startIcon={!editOpen ? <EditIcon /> : null}
+              // className={editOpen ? "cancel" : ""}
+            >
+              {editOpen ? "Cancel" : "Edit Date & Time"}
+            </Button>
+            <Button
+              className={!editOpen ? classes.btn : ""}
+              onClick={(e) => handleSaveClick()}
+              variant="contained"
+              color="secondary"
+              fullWidth
+              disableElevation
+              style={{ marginTop: 15 }}
+              size="large"
+              startIcon={<SaveIcon />}
+            >
+              Save
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   );

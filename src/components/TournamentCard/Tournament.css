@@ -1,9 +1,0 @@
-.displayed-items {
-  width: 300px;
-  border: solid 2px black;
-  display: inline-block;
-}
-
-.delete-tour-button {
-  text-align: right;
-}

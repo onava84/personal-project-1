@@ -1,0 +1,38 @@
+/* .search-form {
+  display: flex;
+  padding: 20px;
+  width: 50vw;
+  border: solid 1px black;
+} */
+.form {
+  width: 50vw;
+}
+/* .tournament-main {
+  border: solid 1px red;
+  display: flex;
+}  */
+
+.form-container {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.display-results {
+  display: flex;
+  /* border: solid 2px black; */
+  flex-wrap: wrap;
+  /* flex-direction: column; */
+  /* padding: 30px; */
+  justify-content: center;
+}
+
+/* .main-div-tournaments {
+  padding: 30px;
+} */
+
+@media screen and (max-width: 700px) {
+  .form {
+    width: 90vw;
+  }
+}

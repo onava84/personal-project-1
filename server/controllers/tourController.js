@@ -1,6 +1,4 @@
-// const {
-//   default: Dashboard,
-// } = require("../../src/components/Dashboard/Dashboard");
+const robin = require("roundrobin");
 
 const createTournament = async (req, res) => {
   try {
@@ -22,13 +20,40 @@ const createTournament = async (req, res) => {
   }
 };
 
-const createTeam = (req, res) => {
+// const createTeam = async (req, res) => {
+//   try {
+//     const db = req.app.get("db");
+//     const { team_name, tournament_id } = req.body;
+//     // console.log(team_name, tournament_id);
+//     const team = await db.teams.create_team({ team_name, tournament_id });
+//     res.status(200).send(team);
+//   } catch (e) {
+//     res.status(500).send(e);
+//   }
+// };
+
+const createTeam = async (req, res) => {
   try {
     const db = req.app.get("db");
-    const { team_name, tournament_id } = req.body;
+    const { teams, tournament_id } = req.body;
     // console.log(team_name, tournament_id);
-    const team = await db.teams.create_team({ team_name, tournament_id });
-    res.status(200).send(team);
+    // console.log("teams:", teams);
+    // console.log("tournament_id:", tournament_id);
+    // console.log(teams.length);
+    const isEven = teams.length % 2 === 0 ? true : false;
+    const teams_number = isEven ? teams.length : teams.length + 1;
+    const newTeams = isEven ? teams : [...teams, { teamName: "Rest" }];
+    console.log(newTeams);
+    console.log(teams_number);
+    console.log(tournament_id);
+    for (let i = 0; i < newTeams.length; i++) {
+      await db.teams.create_team(newTeams[i].teamName, tournament_id);
+    }
+    const teamsToSend = await db.teams.get_teams({ tournament_id });
+    //aqui genero los matches
+    const matches = robin(teamsToSend.length, teamsToSend);
+    console.log(matches);
+    res.status(200).send(matches);
   } catch (e) {
     res.status(500).send(e);
   }
@@ -111,6 +136,18 @@ const getMatches = async (req, res) => {
   }
 };
 //////
+const getMatchesAllUsers = async (req, res) => {
+  try {
+    const db = req.app.get("db");
+    const { tournament_id } = req.query;
+    const filteredMatches = await db.matches.get_matches({ tournament_id });
+    // console.log(tournament_id, filteredMatches);
+    res.status(200).send(filteredMatches);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+};
+////////
 const deleteTournament = async (req, res) => {
   try {
     const db = req.app.get("db");
@@ -154,8 +191,17 @@ const getSingleMatch = async (req, res) => {
 const getAllTournaments = async (req, res) => {
   try {
     const db = req.app.get("db");
-    const allTournaments = await db.tournaments.get_all_tournaments();
-    res.status(200).send(allTournaments);
+    const { tournament_name } = req.query;
+    console.log(tournament_name);
+    if (tournament_name !== undefined) {
+      const allTournaments = await db.tournaments.get_single_tournament_by_name(
+        { tournament_name }
+      );
+      res.status(200).send(allTournaments);
+    } else {
+      const allTournaments = await db.tournaments.get_all_tournaments();
+      res.status(200).send(allTournaments);
+    }
   } catch (e) {
     res.status(500).send(e);
   }
@@ -183,4 +229,5 @@ module.exports = {
   updateMatch,
   getSingleMatch,
   getAllTournaments,
+  getMatchesAllUsers,
 };

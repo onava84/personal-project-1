@@ -1,0 +1,30 @@
+.match {
+  background-color: #294b7a;
+  border-radius: 5px;
+  margin-top: 15px;
+  border: none;
+  color: white;
+  min-width: 300px;
+}
+
+.teams-name {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.teams-name-open {
+  font-size: 30px;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.date,
+.time {
+  line-height: 2em;
+}
+
+.date-open,
+.time-open {
+  color: #white;
+  line-height: 2em;
+}

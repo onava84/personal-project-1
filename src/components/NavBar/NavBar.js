@@ -1,32 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { clearReduxState } from "../../redux/reducer";
-import { useHistory } from "react-router-dom";
-import axios from "axios";
-import "./Menu.css";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import {
-  IconButton,
-  ThemeProvider,
-  Button,
-  Typography,
-} from "@material-ui/core";
+import React from "react";
+import Button from "@material-ui/core/Button";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
+import { Toolbar } from "@material-ui/core";
+import { AppBar } from "@material-ui/core";
+import { useSelector, useDispatch } from "react-redux";
 import { Box } from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
-// import { Tabs, Tab } from "@material-ui/core";
-import Menu from "@material-ui/icons/Menu";
-import { MenuItem } from "@material-ui/core";
-import { alpha } from "@material-ui/core";
-import { Badge } from "@material-ui/core";
-import { More } from "@material-ui/icons";
-import { Mail } from "@material-ui/icons";
-import { Notifications } from "@material-ui/icons";
-import { AccountCircle } from "@material-ui/icons";
-import { Search } from "@material-ui/icons";
-import { Input } from "@material-ui/core";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+import { clearReduxState } from "../../redux/reducer";
+// import { Link } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,13 +39,12 @@ const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
 }));
 
-const MainMenu = () => {
+export default function SimpleMenu() {
   const classes = useStyles();
   const username = useSelector((reduxState) => reduxState.username);
   const dispatch = useDispatch();
-  let history = useHistory();
-
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const history = useHistory();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -72,9 +57,87 @@ const MainMenu = () => {
   const handleLogOut = () => {
     axios.delete("/auth/logout").then((response) => {
       dispatch(clearReduxState());
+      handleClose();
       history.push("/login");
     });
   };
+
+  const mobileGuest = (
+    <div>
+      <Button
+        aria-controls="simple-menu"
+        aria-haspopup="true"
+        onClick={handleClick}
+        color="primary"
+        variant="contained"
+      >
+        Menu
+      </Button>
+      <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleClose} component={Link} to="/">
+          Home
+        </MenuItem>
+        <MenuItem
+          onClick={handleClose}
+          component={Link}
+          to="/search-tournament"
+        >
+          Search tournament
+        </MenuItem>
+        <MenuItem onClick={handleClose} component={Link} to="/register">
+          Register
+        </MenuItem>
+        <MenuItem onClick={handleClose} component={Link} to="/login">
+          Login
+        </MenuItem>
+      </Menu>
+    </div>
+  );
+
+  const mobileLoggedIn = (
+    <div>
+      <Button
+        aria-controls="simple-menu"
+        aria-haspopup="true"
+        onClick={handleClick}
+        color="primary"
+        variant="contained"
+      >
+        Menu
+      </Button>
+      <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleClose} component={Link} to="/">
+          Home
+        </MenuItem>
+        <MenuItem onClick={handleClose} component={Link} to="/dashboard">
+          Dashboard
+        </MenuItem>
+        <MenuItem
+          onClick={handleClose}
+          component={Link}
+          to="/create-tournament"
+        >
+          Create tournament
+        </MenuItem>
+        <MenuItem onClick={handleClose} component={Link} to="/tournaments">
+          Search tournament
+        </MenuItem>
+        <MenuItem onClick={() => handleLogOut()}>Logout</MenuItem>
+      </Menu>
+    </div>
+  );
 
   const guestUsersDesktop = (
     <>
@@ -144,11 +207,11 @@ const MainMenu = () => {
           <div className={classes.sectionDesktop}>
             {!username ? guestUsersDesktop : loggedInUsersDesktop}
           </div>
-          <div className={classes.sectionMobile}></div>
+          <div className={classes.sectionMobile}>
+            {!username ? mobileGuest : mobileLoggedIn}
+          </div>
         </Toolbar>
       </AppBar>
     </div>
   );
-};
-
-export default MainMenu;
+}
