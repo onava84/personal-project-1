@@ -1,9 +1,7 @@
 const bcrypt = require("bcrypt");
 const sgMail = require("@sendgrid/mail");
 const { v4: uuid } = require("uuid");
-
-const API_KEY =
-  "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";
+const { API_KEY } = process.env;
 
 const register = async (req, res) => {
   try {
