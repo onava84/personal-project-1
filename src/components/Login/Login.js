@@ -46,7 +46,7 @@ const Login = (props) => {
   const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [accessError, setAccessError] = useState(false);
-  const [emptyError, setEmptyError] = useState(false);
+  // const [emptyError, setEmptyError] = useState(false);
 
   const handleChange = (e) => {
     setAuthInfo({
@@ -61,10 +61,10 @@ const Login = (props) => {
     setUsernameError(false);
     setPasswordError(false);
     setAccessError(false);
-    if (authInfo.username == "") {
+    if (authInfo.username === "") {
       setUsernameError(true);
     }
-    if (authInfo.password == "") {
+    if (authInfo.password === "") {
       setPasswordError(true);
     }
     if (authInfo.username && authInfo.password) {
@@ -139,7 +139,7 @@ const Login = (props) => {
                 Submit
               </Button>
               <Typography style={{ textAlign: "right", fontSize: 14 }}>
-                <Link href="/#/reset-password" variant="body2">
+                <Link href="/#/reset-password-request" variant="body2">
                   I forgot my password
                 </Link>
               </Typography>

@@ -13,7 +13,9 @@ import NewPasswordInput from "./components/NewPassword/NewPasswordInput";
 
 export default (
   <Switch>
-    <Route exact path="/" component={Home} />
+    <Route exact path="/">
+      <Home />
+    </Route>
     <Route path="/dashboard" component={Dashboard} />
     <Route path="/create-tournament" component={CreateTournament} />
     <Route path="/register" component={Register} />

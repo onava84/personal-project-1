@@ -15,7 +15,7 @@ const SingleTournament = (props) => {
         setMatches(res.data);
       })
       .catch((e) => console.log(e));
-  }, []);
+  }, [props.match.params.id]);
 
   let weeksLong = 0;
   const tourName = matches.length > 0 ? matches[0].tournament_name : null;

@@ -1,7 +1,7 @@
 INSERT INTO teams
-(team_name, tournament_id)
+(team_name, tournament_id, tournament_type)
 VALUES
-($1, $2)
+($1, $2, $3)
 RETURNING *;
 
 

@@ -6,7 +6,7 @@ import { Typography, Box } from "@material-ui/core";
 
 const Tournament = (props) => {
   const [matches, setMatches] = useState([]);
-  const [weekArray, setWeekArray] = useState([]);
+  // const [weekArray, setWeekArray] = useState([]);
 
   useEffect(() => {
     axios
@@ -16,7 +16,7 @@ const Tournament = (props) => {
         setMatches(res.data);
       })
       .catch((e) => console.log(e));
-  }, []);
+  }, [props.match.params.id]);
 
   // console.log(matches);
   let weeksLong = 0;

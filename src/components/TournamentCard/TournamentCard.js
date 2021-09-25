@@ -1,18 +1,12 @@
 // import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import React, { useState, useEffect } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 import axios from "axios";
 import "./TournamentCard.css";
 import { Link } from "react-router-dom";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import {
-  Button,
-  Container,
-  Grid,
-  IconButton,
-  Typography,
-} from "@material-ui/core";
+// import Card from "@material-ui/core/Card";
+// import CardHeader from "@material-ui/core/CardHeader";
+import { Button, IconButton, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 // import { Link } from "@material-ui/core";

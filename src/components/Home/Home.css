@@ -79,7 +79,7 @@
   padding: 20px;
   display: flex;
   justify-content: center;
-  /* flex-wrap: wrap; */
+  flex-wrap: wrap;
   /* flex-direction: row; */
 }
 
@@ -112,4 +112,23 @@ img {
   margin-top: 20px;
   margin-bottom: 20px;
   align-self: center;
+}
+
+@media screen and (max-width: 700px) {
+  .container {
+    max-width: 1300px;
+    /* background-color: chocolate; */
+    margin: auto;
+    /* height: 500px; */
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .left-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    /* align-text: left; */
+  }
 }

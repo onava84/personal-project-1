@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { updateUsername, updateUserId } from "../../redux/reducer";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { Container, Typography } from "@material-ui/core";
@@ -9,7 +7,6 @@ import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core";
 import Link from "@material-ui/core/Link";
-import { Alert } from "@material-ui/lab";
 
 const useStyles = makeStyles({
   field: {
@@ -41,12 +38,6 @@ const useStyles = makeStyles({
 
 const ResetPassword = (props) => {
   const classes = useStyles();
-  const [authInfo, setAuthInfo] = useState({ username: "", password: "" });
-  const dispatch = useDispatch();
-  const [usernameError, setUsernameError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const [accessError, setAccessError] = useState(false);
-  const [emptyError, setEmptyError] = useState(false);
 
   const [email, setEmail] = useState("");
 
@@ -85,7 +76,9 @@ const ResetPassword = (props) => {
   // };
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newObj = { email: email };
+    // console.log("aqui 88");
+    const newObj = { email };
+    console.log(newObj);
     axios
       .post("/auth/resetpassword", newObj)
       .then(() => {
@@ -95,8 +88,6 @@ const ResetPassword = (props) => {
         console.log("hubo algun error");
       });
   };
-
-  console.log(email);
 
   return (
     <Container className={classes.contenedor}>
@@ -129,7 +120,6 @@ const ResetPassword = (props) => {
                 color="secondary"
                 required
                 onChange={(e) => setEmail(e.target.value)}
-                // error={usernameError}
                 fullWidth
               ></TextField>
               <Button
@@ -140,7 +130,6 @@ const ResetPassword = (props) => {
                 size="large"
                 disableElevation
                 fullWidth
-                // onClick={console.log(authInfo)}
               >
                 Send reset instructions
               </Button>
@@ -154,16 +143,11 @@ const ResetPassword = (props) => {
                 </Link>
               </Typography>
             </form>
-            {accessError ? (
+            {/* {accessError ? (
               <Alert severity="error" className={classes.error}>
                 Username or password is incorrect.
               </Alert>
-            ) : null}
-            {usernameError || passwordError ? (
-              <Alert severity="error" className={classes.error}>
-                You must enter a username and password.
-              </Alert>
-            ) : null}
+            ) : null} */}
           </Card>
         </Grid>
       </Grid>

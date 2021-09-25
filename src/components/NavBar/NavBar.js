@@ -83,11 +83,7 @@ export default function SimpleMenu() {
         <MenuItem onClick={handleClose} component={Link} to="/">
           Home
         </MenuItem>
-        <MenuItem
-          onClick={handleClose}
-          component={Link}
-          to="/search-tournament"
-        >
+        <MenuItem onClick={handleClose} component={Link} to="/tournaments">
           Search tournament
         </MenuItem>
         <MenuItem onClick={handleClose} component={Link} to="/register">
@@ -203,7 +199,7 @@ export default function SimpleMenu() {
       <div className={classes.toolbar}></div>
       <AppBar elevation={0} color="secondary" className={classes.root}>
         <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography>MyTournament.online</Typography>
+          <Typography>MyTournament</Typography>
           <div className={classes.sectionDesktop}>
             {!username ? guestUsersDesktop : loggedInUsersDesktop}
           </div>

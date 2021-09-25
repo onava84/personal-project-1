@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { useDispatch } from "react-redux";
-import { updateUsername, updateUserId } from "../../redux/reducer";
+import React, { useState, useEffect } from "react";
+// // import axios from "axios";
+// import { useDispatch } from "react-redux";
+// import { updateUsername, updateUserId } from "../../redux/reducer";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { Container, Typography } from "@material-ui/core";
@@ -10,6 +10,7 @@ import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core";
 import Link from "@material-ui/core/Link";
 import { Alert } from "@material-ui/lab";
+import axios from "axios";
 
 const useStyles = makeStyles({
   field: {
@@ -41,32 +42,40 @@ const useStyles = makeStyles({
 
 const NewPasswordInput = (props) => {
   const classes = useStyles();
-  const [authInfo, setAuthInfo] = useState({ username: "", password: "" });
-  const dispatch = useDispatch();
-  const [usernameError, setUsernameError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const [accessError, setAccessError] = useState(false);
-  const [emptyError, setEmptyError] = useState(false);
-
   ////
   const [newPassword, setNewPassword] = useState("");
   const [confNewPassword, setConfNewPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [id, setId] = useState(props.match.params.id);
 
-  const handleChange = (e) => {
-    setAuthInfo({
-      ...authInfo,
-      [e.target.name]: e.target.value,
-    });
-    // console.log(authInfo);
-  };
+  useEffect(() => {
+    axios
+      .get(`/auth/verifyemail/${id}`)
+      .then((response) => {
+        setEmail(response.data.email);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
 
   const handleSubmit = (e) => {
+    e.preventDefault();
     if (newPassword === confNewPassword) {
-      // axios.post;
+      const objToPost = {
+        email,
+        id,
+        newPassword,
+      };
+      axios
+        .post("/auth/updatepassword", objToPost)
+        .then(() => console.log("El password se ha actualizado"))
+        .catch((e) => console.log(e));
     }
   };
 
-  // console.log(email);
+  console.log(email);
+  console.log(id);
 
   return (
     <Container className={classes.contenedor}>
@@ -100,7 +109,6 @@ const NewPasswordInput = (props) => {
                 type="password"
                 required
                 onChange={(e) => setNewPassword(e.target.value)}
-                // error={usernameError}
                 fullWidth
               ></TextField>
               <TextField
@@ -109,9 +117,9 @@ const NewPasswordInput = (props) => {
                 variant="outlined"
                 label="Confirm password"
                 color="secondary"
+                type="password"
                 required
                 onChange={(e) => setConfNewPassword(e.target.value)}
-                // error={usernameError}
                 fullWidth
               ></TextField>
 
@@ -137,16 +145,6 @@ const NewPasswordInput = (props) => {
                 </Link>
               </Typography>
             </form>
-            {accessError ? (
-              <Alert severity="error" className={classes.error}>
-                Username or password is incorrect.
-              </Alert>
-            ) : null}
-            {usernameError || passwordError ? (
-              <Alert severity="error" className={classes.error}>
-                You must enter a username and password.
-              </Alert>
-            ) : null}
           </Card>
         </Grid>
       </Grid>

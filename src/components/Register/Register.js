@@ -81,16 +81,16 @@ const Register = (props) => {
     setRealEmailError(false);
     setduplicatedUserError(false);
 
-    if (username == "") {
+    if (username === "") {
       setUsernameError(true);
     }
-    if (email == "") {
+    if (email === "") {
       setEmailError(true);
     }
-    if (password == "") {
+    if (password === "") {
       setPasswordError(true);
     }
-    if (passwordConf == "") {
+    if (passwordConf === "") {
       setPasswordConfError(true);
     }
 

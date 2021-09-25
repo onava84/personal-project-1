@@ -20,7 +20,7 @@ const register = async (req, res) => {
           to: email,
           from: {
             name: "MyTournament",
-            email: "support@mytournament.online",
+            email: "support1@mytournament.online",
           },
           subject: "Welcome to MyTournament",
           text: "Hey! Thank you for signing up to MyTournament.online.",
@@ -93,12 +93,15 @@ const resetPassword = async (req, res) => {
       let id = uuid();
       const insertado = await db.auth.insert_id_email({ id, email });
       sgMail.setApiKey(API_KEY);
+      // console.log(insertado[0].email);
+      // console.log(id);
+
       const content = {
-        to: email,
-        from: "support@mytournament.online",
+        to: insertado[0].email,
+        from: "support1@mytournament.online",
         subject: "Password Recovery",
         html: `<body>
-        <p>Click to set a new password : <a href="http://localhost:3002/#/new-password/${id}">Reset password</a></p>
+        <p>Click to set a new password : <a href="http://localhost:3000/#/new-password/${id}">Reset password</a></p>
 
         </body>`,
       };
@@ -118,7 +121,7 @@ const getUserIdVerify = async (req, res) => {
     const db = req.app.get("db");
     const { id } = req.params;
     const email = await db.auth.get_user_pass_reset({ id });
-    console.log(email);
+    // console.log(email);
     return res.send(email[0]);
   } catch (e) {
     res.status(500).send(e);
@@ -128,16 +131,15 @@ const getUserIdVerify = async (req, res) => {
 const updatePassword = async (req, res) => {
   try {
     const db = req.app.get("db");
-    const { email, id, newpassword } = req.body;
+    const { email, id, newPassword } = req.body;
     const user = await db.auth.get_user_reset_email({ email });
     if (user.length === 0) {
       return res.status(404).send("an error occured");
     }
 
     //hash new password
-
     const salt = await bcrypt.genSalt(10);
-    const hashedpassword = await bcrypt.hash(newpassword, salt);
+    const hashedpassword = await bcrypt.hash(newPassword, salt);
 
     //update the users table!
     await db.auth.update_user_password({ password: hashedpassword, email });

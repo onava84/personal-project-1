@@ -4,17 +4,20 @@ import MatchOpen from "../MatchOpen/MatchOpen";
 import "./WeeksOpen.css";
 
 const WeeksOpen = (props) => {
-  const [matches, setMatches] = useState(props.matches);
+  const [matches] = useState(props.matches);
   // console.log(matches);
   // const weekMatches = matches.filter(e => e.week === props.week)
+  const indexOfRest = matches.findIndex(
+    (e) => e.team_1_name === "Rest" || e.team_2_name === "Rest"
+  );
+
+  const matchesNoRest = matches.push(matches.splice(indexOfRest, 1)[0]);
+  console.log(matchesNoRest);
 
   const matchesMap = matches.map((e) => {
     console.log(e.match_id);
     return <MatchOpen match={e} key={e.match_id} />;
   });
-
-  // console.log(props.matches);
-  // console.log(matches);
 
   return (
     <div className="displayed-weeks-open">

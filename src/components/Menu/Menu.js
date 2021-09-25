@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+// import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { clearReduxState } from "../../redux/reducer";
 import { useHistory } from "react-router-dom";
@@ -7,26 +7,21 @@ import axios from "axios";
 import "./Menu.css";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import {
-  IconButton,
-  ThemeProvider,
-  Button,
-  Typography,
-} from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import { Box } from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
+// import MenuIcon from "@material-ui/icons/Menu";
 // import { Tabs, Tab } from "@material-ui/core";
-import Menu from "@material-ui/icons/Menu";
-import { MenuItem } from "@material-ui/core";
-import { alpha } from "@material-ui/core";
-import { Badge } from "@material-ui/core";
-import { More } from "@material-ui/icons";
-import { Mail } from "@material-ui/icons";
-import { Notifications } from "@material-ui/icons";
-import { AccountCircle } from "@material-ui/icons";
-import { Search } from "@material-ui/icons";
-import { Input } from "@material-ui/core";
+// import Menu from "@material-ui/icons/Menu";
+// import { MenuItem } from "@material-ui/core";
+// import { alpha } from "@material-ui/core";
+// import { Badge } from "@material-ui/core";
+// import { More } from "@material-ui/icons";
+// import { Mail } from "@material-ui/icons";
+// import { Notifications } from "@material-ui/icons";
+// import { AccountCircle } from "@material-ui/icons";
+// import { Search } from "@material-ui/icons";
+// import { Input } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
