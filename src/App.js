@@ -60,12 +60,8 @@ function App() {
           <SimpleMenu />
           {/* {routes} */}
           <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route path="/dashboard">
-              <Dashboard />
-            </Route>
+            <Route exact path="/" component={Home} />
+            <Route path="/dashboard" component={Dashboard} />
             <Route path="/create-tournament" component={CreateTournament} />
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
