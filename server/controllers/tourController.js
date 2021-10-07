@@ -196,6 +196,7 @@ const createMatches = async (req, res) => {
     if (req.session.user) {
       const db = req.app.get("db");
       const tournament = req.body;
+      console.log(tournament);
       const matchesWithWeekPlaying = [];
       const tournament_id = req.body[0][0][0].tournament_id;
       // console.log(tournament_id);
@@ -234,7 +235,8 @@ const getMatches = async (req, res) => {
       const { tournament_id } = req.query;
       const filteredMatches = await db.matches.get_matches({ tournament_id });
       // console.log(tournament_id, filteredMatches);
-      console.log(new Date());
+      // console.log(new Date());
+      console.log(filteredMatches);
       res.status(200).send(filteredMatches);
     } else {
       res.status(400).send("You need to be logged in");
@@ -273,12 +275,15 @@ const updateMatch = async (req, res) => {
   try {
     const db = req.app.get("db");
     const { match_id } = req.params;
-    const { match_date, match_time } = req.body;
-    await db.matches.update_matches({
+    const { match_date, match_time, referee_id } = req.body;
+    console.log(typeof referee_id);
+    const updatedMatch = await db.matches.update_matches({
       match_id,
       match_date,
       match_time,
+      referee_id: referee_id === "" ? null : referee_id,
     });
+    console.log(updatedMatch);
     res.status(200).send("se supone que ya jalo");
   } catch (e) {
     res.status(500).send(e);
@@ -315,16 +320,44 @@ const getAllTournaments = async (req, res) => {
   }
 };
 
-// const deleteMatches = async (req, res) => {
-//   try {
-//     const db = req.app.get("db");
-//     const { tournament_id } = req.params;
-//     await db.matches.delete_matches({ tournament_id });
-//     res.sendStatus(200);
-//   } catch (e) {
-//     res.status(500).send(e);
-//   }
-// };
+const getTourReferees = async (req, res) => {
+  try {
+    const db = req.app.get("db");
+    const { tournament_id } = req.query;
+    const allReferees = await db.tournaments.get_tournament_referees({
+      tournament_id,
+    });
+    res.status(200).send(allReferees);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+};
+
+const getMatchReferee = async (req, res) => {
+  try {
+    const db = req.app.get("db");
+    const { referee_id } = req.params;
+    const referee = await db.referees.get_referee({
+      referee_id,
+    });
+    res.status(200).send(referee);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+};
+
+const getFields = async (req, res) => {
+  try {
+    const db = req.app.get("db");
+    const { tournament_id } = req.query;
+    const allFields = await db.tournaments.get_tournament_fields({
+      tournament_id,
+    });
+    res.status(200).send(allFields);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+};
 
 module.exports = {
   createTournament,
@@ -338,4 +371,7 @@ module.exports = {
   getSingleMatch,
   getAllTournaments,
   getMatchesAllUsers,
+  getTourReferees,
+  getMatchReferee,
+  getFields,
 };

@@ -1,11 +1,11 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles } from "@material-ui/core";
 import { Typography } from "@material-ui/core";
 import { Toolbar } from "@material-ui/core";
-import { AppBar } from "@material-ui/core";
+import AppBar from "@mui/material/AppBar";
 import { useSelector, useDispatch } from "react-redux";
 import { Box } from "@material-ui/core";
 import axios from "axios";
@@ -139,22 +139,22 @@ export default function SimpleMenu() {
     <>
       <div style={{ display: "flex" }}>
         <Box mr={4}>
-          <Button href="/#/" color="inherit">
+          <Button href="/" color="inherit">
             Home
           </Button>
         </Box>
         <Box mr={4}>
-          <Button href="/#/register" color="inherit">
+          <Button href="/register" color="inherit">
             Register
           </Button>
         </Box>
         <Box mr={4}>
-          <Button href="/#/tournaments" color="inherit">
+          <Button href="/tournaments" color="inherit">
             Search tournament
           </Button>
         </Box>
         <Box mr={4}>
-          <Button href="/#/login" color="inherit">
+          <Button href="/login" color="inherit">
             Login
           </Button>
         </Box>
@@ -166,22 +166,22 @@ export default function SimpleMenu() {
     <>
       <div style={{ display: "flex" }}>
         <Box mr={4}>
-          <Button href="/#/" color="inherit">
+          <Button href="/" color="inherit">
             Home
           </Button>
         </Box>
         <Box mr={4}>
-          <Button href="/#/dashboard" color="inherit">
+          <Button href="/dashboard" color="inherit">
             Dashboard
           </Button>
         </Box>
         <Box mr={4}>
-          <Button href="/#/create-tournament" color="inherit">
+          <Button href="/create-tournament" color="inherit">
             Create tournament
           </Button>
         </Box>
         <Box mr={4}>
-          <Button href="/#/tournaments" color="inherit">
+          <Button href="/tournaments" color="inherit">
             Search tournament
           </Button>
         </Box>

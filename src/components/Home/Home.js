@@ -1,10 +1,12 @@
 import React from "react";
 import "./Home.css";
 import { Button } from "@material-ui/core";
+import SimpleMenu from "../NavBar/NavBar";
 
 const Home = (props) => {
   return (
     <div>
+      {/* <SimpleMenu /> */}
       <div className="above-the-fold-container">
         <div className="container">
           <div className="left-container">

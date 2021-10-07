@@ -19,6 +19,8 @@ import Tournaments from "./components/Tournaments/Tournaments";
 import SingleTournament from "./components/SingleTournament/SingleTournament";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import NewPasswordInput from "./components/NewPassword/NewPasswordInput";
+import DashboardNavbar from "./components/NewDashboard/NewNavbar/NewNavbar";
+// import ResponsiveDrawer from "./components/NewDashboard/Drawer/Drawer";
 
 const theme = createTheme({
   palette: {
@@ -51,14 +53,12 @@ function App() {
 
   const prueba = "este es string";
   const paDashboard = "este string va para dashboard";
-
+  console.log(window.location.pathname);
   return (
     <ThemeProvider theme={theme}>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <div className="App">
-          {/* <MainMenu /> */}
           <SimpleMenu />
-          {/* {routes} */}
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/dashboard" component={Dashboard} />
@@ -71,6 +71,7 @@ function App() {
             <Route path="/reset-password-request" component={ResetPassword} />
             <Route path="/new-password/:id" component={NewPasswordInput} />
           </Switch>
+          {/* <DashboardNavbar /> */}
         </div>
       </MuiPickersUtilsProvider>
     </ThemeProvider>

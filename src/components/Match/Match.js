@@ -2,18 +2,19 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Match.css";
 import DateFnsUtils from "@date-io/date-fns";
-import {
-  DatePicker,
-  TimePicker,
-  DateTimePicker,
-  MuiPickersUtilsProvider,
-} from "@material-ui/pickers";
+import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { Button } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import SaveIcon from "@material-ui/icons/Save";
 import { makeStyles } from "@material-ui/core";
 import { format, addDays, parseISO, parse } from "date-fns";
-// import { alpha } from "@material-ui/core/styles";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
+import { Box, width } from "@mui/system";
+import Modal from "@mui/material/Modal";
+import { Typography } from "@material-ui/core";
+import RefereeSelect from "./RefereeSelect.js/RefereeSelect";
+import FieldsSelect from "./Fields/FieldsSelect";
 
 const useStyles = makeStyles({
   btn: {
@@ -26,6 +27,7 @@ const Match = (props) => {
   const [match, setMatch] = useState({});
   const [selectedDate, setSelectedDate] = useState(addDays(new Date(), 1));
   const [edit, setEdit] = useState(false);
+  const [selectedReferee, setSelectedReferee] = useState("");
   const classes = useStyles();
 
   useEffect(() => {
@@ -48,7 +50,9 @@ const Match = (props) => {
     const updatedMatch = {
       match_date: format(selectedDate, "yyyy-MM-dd"),
       match_time: format(selectedDate, "HH:mm:ss"),
+      referee_id: selectedReferee,
     };
+    console.log("line 55");
     axios
       .put(`/api/matches/${match.match_id}`, updatedMatch)
       .then((res) => {
@@ -64,7 +68,22 @@ const Match = (props) => {
   };
 
   // const nuevaFecha = new Date();
-  // console.log(nuevaFecha);
+  console.log(selectedReferee);
+
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "white",
+    border: "none",
+    boxShadow: 24,
+    borderRadius: "10px",
+    p: 4,
+  };
+
+  // console.log(props);
 
   return (
     <div className="match-1">
@@ -92,22 +111,6 @@ const Match = (props) => {
           <div>
             {editOpen ? (
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                {/* <div>
-                  <DatePicker
-                    disablePast
-                    value={selectedDate}
-                    onChange={setSelectedDate}
-                    label="Select Date"
-                  />
-                </div>
-                <div>
-                  <TimePicker
-                    value={selectedDate}
-                    onChange={setSelectedDate}
-                    label="Select Time"
-                    color="primary"
-                  />
-                </div> */}
                 <div>
                   <DateTimePicker
                     value={selectedDate}
@@ -117,6 +120,11 @@ const Match = (props) => {
                     className="selector"
                   />
                 </div>
+                <FieldsSelect tournamentId={props.match.tournament_id} />
+                <RefereeSelect
+                  refereeSelection={setSelectedReferee}
+                  tournamentId={props.match.tournament_id}
+                />
               </MuiPickersUtilsProvider>
             ) : (
               ""
@@ -132,13 +140,12 @@ const Match = (props) => {
               size="large"
               onClick={(e) => clickHandler()}
               startIcon={!editOpen ? <EditIcon /> : null}
-              // className={editOpen ? "cancel" : ""}
             >
               {editOpen ? "Cancel" : "Edit Date & Time"}
             </Button>
             <Button
               className={!editOpen ? classes.btn : ""}
-              onClick={(e) => handleSaveClick()}
+              onClick={handleSaveClick}
               variant="contained"
               color="secondary"
               fullWidth
