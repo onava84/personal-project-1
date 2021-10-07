@@ -1,13 +1,15 @@
 import { useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
-import { Box, Button, Typography } from "@material-ui/core";
+import { Box, Button, Typography, Container } from "@material-ui/core";
 // import ButtonGroup from "@material-ui/core/ButtonGroup";
 import axios from "axios";
 import TournamentCard from "../TournamentCard/TournamentCard";
 import "./Dashboard.css";
 // import { Typography } from "@material-ui/core";
 import Login from "../Login/Login";
+// import ResponsiveDrawer from "../NewDashboard/Drawer/Drawer";
 // import Loader from "../Loader/Loader";
+import ResponsiveDrawer from "../NewDashboard/Drawer/Drawer";
 
 const Dashboard = () => {
   const username = useSelector((reduxState) => reduxState.username);
@@ -48,43 +50,45 @@ const Dashboard = () => {
   console.log(username);
 
   return (
-    <div>
-      {username ? (
-        <div>
-          <Typography variant="h4" color="secondary">
-            <Box fontWeight="fontWeightBold" mt={4}>
-              Dashboard
-            </Box>
-          </Typography>
-          {tournaments.length > 0 ? (
-            <div className="main-dashboard">{tournamentsMap}</div>
-          ) : (
-            <div>
-              <Box mt={4} mb={2}>
-                <Typography
-                  variant="h5"
-                  style={{ fontWeight: "bold" }}
-                  color="secondary"
-                >
-                  You don't have any tournament yet, let's create one!
-                </Typography>
+    <ResponsiveDrawer>
+      <div>
+        {username ? (
+          <div>
+            <Typography variant="h4" color="secondary">
+              <Box fontWeight="fontWeightBold" mt={4}>
+                Dashboard
               </Box>
-              <Button
-                color="primary"
-                variant="contained"
-                size="large"
-                disableElevation
-                href="/#/create-tournament"
-              >
-                Create new tournament
-              </Button>
-            </div>
-          )}
-        </div>
-      ) : (
-        <Login />
-      )}
-    </div>
+            </Typography>
+            {tournaments.length > 0 ? (
+              <div className="main-dashboard">{tournamentsMap}</div>
+            ) : (
+              <div>
+                <Box mt={4} mb={2}>
+                  <Typography
+                    variant="h5"
+                    style={{ fontWeight: "bold" }}
+                    color="secondary"
+                  >
+                    You don't have any tournament yet, let's create one!
+                  </Typography>
+                </Box>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  size="large"
+                  disableElevation
+                  href="/#/create-tournament"
+                >
+                  Create new tournament
+                </Button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <Login />
+        )}
+      </div>
+    </ResponsiveDrawer>
   );
 };
 

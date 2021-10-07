@@ -28,7 +28,7 @@ const SingleTournament = (props) => {
   }
 
   // const weekuno = matches.filter((match) => match.week_playing === 1);
-  console.log(weeks.length);
+  // console.log(weeks.length);
   const weeksMap = weeks.map((e, i, a) => {
     return (
       <WeeksOpen

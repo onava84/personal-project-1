@@ -24,7 +24,9 @@ const {
   getSingleMatch,
   getAllTournaments,
   getMatchesAllUsers,
-  // getSingleTournamentAlUsers,
+  getTourReferees,
+  getMatchReferee,
+  getFields,
 } = require("./controllers/tourController");
 const app = express();
 
@@ -84,6 +86,13 @@ app.get("/api/matches", getMatches);
 app.put("/api/matches/:match_id", updateMatch);
 app.get("/api/matches/:match_id", getSingleMatch);
 // app.delete("/api/matches/:tournament_id", deleteMatches);
+
+//referees
+app.get("/api/referees", getTourReferees); // get all referees
+app.get("/api/match-referee/:referee_id", getMatchReferee); //get specific referee
+app.post("/api/referees"); //to add one refe
+
+app.get("/api/fields", getFields); //
 
 app.listen(SERVER_PORT, () =>
   console.log(`server running on port ${SERVER_PORT}`)

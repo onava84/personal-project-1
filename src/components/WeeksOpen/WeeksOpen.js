@@ -12,10 +12,10 @@ const WeeksOpen = (props) => {
   );
 
   const matchesNoRest = matches.push(matches.splice(indexOfRest, 1)[0]);
-  console.log(matchesNoRest);
+  // console.log(matchesNoRest);
 
   const matchesMap = matches.map((e) => {
-    console.log(e.match_id);
+    // console.log(e.match_id);
     return <MatchOpen match={e} key={e.match_id} />;
   });
 
