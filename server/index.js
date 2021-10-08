@@ -91,8 +91,9 @@ app.get("/api/matches/:match_id", getSingleMatch);
 app.get("/api/referees", getTourReferees); // get all referees
 app.get("/api/match-referee/:referee_id", getMatchReferee); //get specific referee
 app.post("/api/referees"); //to add one refe
-
-app.get("/api/fields", getFields); //
+//fields
+app.get("/api/fields", getFields); //get all referees
+app.get("/api/fields");
 
 app.listen(SERVER_PORT, () =>
   console.log(`server running on port ${SERVER_PORT}`)

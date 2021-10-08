@@ -1,24 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 // import axios from "axios";
 import { format, parseISO, parse } from "date-fns";
 import "./MatchOpen.css";
-import axios from "axios";
+// import axios from "axios";
 
 const MatchOpen = (props) => {
-  const [referee, setReferee] = useState("Not defined");
+  // const [referee, setReferee] = useState("Not defined");
   // const [field, setField] = useState("Not defined");
 
-  useEffect(() => {
-    if (props.match.referee_id !== null) {
-      console.log(props.match.referee_id);
-      axios.get(`/api/match-referee/${props.match.referee_id}`).then((res) => {
-        console.log(res.data[0]);
-        setReferee(res.data[0].referee_name);
-      });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (props.match.referee_id !== null) {
+  //     console.log(props.match.referee_id);
+  //     axios.get(`/api/match-referee/${props.match.referee_id}`).then((res) => {
+  //       console.log(res.data[0]);
+  //       setReferee(res.data[0].referee_name);
+  //     });
+  //   }
+  // }, []);
 
-  console.log(referee);
+  console.log(new Date(props.match.match_date));
+
+  // console.log(new Date());
+  // console.log(objeto);
 
   return (
     <div
@@ -47,7 +50,7 @@ const MatchOpen = (props) => {
               ? // ? format(selectedDate, "LLLL d yyyy")
                 // match.match_date
                 format(parseISO(props.match.match_date), "EEEE MMMM d yyyy")
-              : "not defined"}
+              : "Not defined"}
           </p>
           <p className="time-open">
             Time:{" "}
@@ -57,9 +60,20 @@ const MatchOpen = (props) => {
                   parse(props.match.match_time, "HH:mm:ss", new Date()),
                   "p"
                 )
-              : "not defined"}
+              : "Not defined"}
           </p>
-          <p className="time-open">Referee: {referee}</p>
+          <p className="time-open">
+            Field:{" "}
+            {props.match.field_name !== null
+              ? props.match.field_name
+              : "Not defined"}
+          </p>
+          <p className="time-open">
+            Referee:{" "}
+            {props.match.referee_name !== null
+              ? props.match.referee_name
+              : "Not defined"}
+          </p>
         </div>
       )}
     </div>

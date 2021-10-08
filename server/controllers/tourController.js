@@ -275,13 +275,14 @@ const updateMatch = async (req, res) => {
   try {
     const db = req.app.get("db");
     const { match_id } = req.params;
-    const { match_date, match_time, referee_id } = req.body;
+    const { match_date, match_time, referee_id, field_id } = req.body;
     console.log(typeof referee_id);
     const updatedMatch = await db.matches.update_matches({
       match_id,
       match_date,
       match_time,
       referee_id: referee_id === "" ? null : referee_id,
+      field_id: field_id === "" ? null : field_id,
     });
     console.log(updatedMatch);
     res.status(200).send("se supone que ya jalo");

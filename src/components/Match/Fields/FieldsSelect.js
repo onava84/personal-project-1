@@ -2,17 +2,20 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Autocomplete from "@mui/material/Autocomplete";
 import { Box } from "@mui/system";
-import { TextField } from "@mui/material";
+import { SliderValueLabel, TextField } from "@mui/material";
+import { Select } from "@mui/material";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
 
-const FieldsSelect = (props) => {
+const FieldSelect = (props) => {
   const [fields, setFields] = useState([]);
+  const [field, setField] = useState("");
 
   useEffect(() => {
     axios
       .get(`/api/fields?tournament_id=${props.tournamentId}`)
       .then((res) => {
-        console.log(res.data);
-        console.log(res);
         setFields(res.data);
       })
       .catch((e) => {
@@ -20,26 +23,34 @@ const FieldsSelect = (props) => {
       });
   }, []);
 
-  const fieldsMapped = fields.map((field) => {
-    return {
-      label: `${field.field_name}`,
-    };
+  const handleChange = (event) => {
+    setField(event.target.value);
+    props.fieldSelection(event.target.value);
+  };
+
+  const fieldMapped = fields.map((field) => {
+    return <MenuItem value={field.field_id}>{field.field_name}</MenuItem>;
   });
 
-  console.log(fields);
-  console.log(props.tournamentId);
-  console.log(fieldsMapped);
   return (
     <Box mt={2}>
-      <Autocomplete
-        disablePortal
-        id="combo-box-demo"
-        options={fieldsMapped}
-        sx={{ width: 300 }}
-        renderInput={(params) => <TextField {...params} label="Fields" />}
-      />
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Field</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={field}
+          label="Field"
+          onChange={handleChange}
+        >
+          {/* <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem> */}
+          {fieldMapped}
+        </Select>
+      </FormControl>
     </Box>
   );
 };
 
-export default FieldsSelect;
+export default FieldSelect;
