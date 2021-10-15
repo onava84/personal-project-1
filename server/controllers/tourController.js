@@ -196,7 +196,7 @@ const createMatches = async (req, res) => {
     if (req.session.user) {
       const db = req.app.get("db");
       const tournament = req.body;
-      console.log(tournament);
+      // console.log(tournament);
       const matchesWithWeekPlaying = [];
       const tournament_id = req.body[0][0][0].tournament_id;
       // console.log(tournament_id);
@@ -236,7 +236,7 @@ const getMatches = async (req, res) => {
       const filteredMatches = await db.matches.get_matches({ tournament_id });
       // console.log(tournament_id, filteredMatches);
       // console.log(new Date());
-      console.log(filteredMatches);
+      // console.log(filteredMatches);
       res.status(200).send(filteredMatches);
     } else {
       res.status(400).send("You need to be logged in");
@@ -275,16 +275,21 @@ const updateMatch = async (req, res) => {
   try {
     const db = req.app.get("db");
     const { match_id } = req.params;
-    const { match_date, match_time, referee_id, field_id } = req.body;
+    const { match_date, referee_id, field_id } = req.body;
+    // console.log(typeof referee_id);
+    console.log(typeof match_id);
+    console.log(match_id);
     console.log(typeof referee_id);
+    console.log(referee_id);
+    console.log(typeof field_id);
+    console.log(field_id);
+
     const updatedMatch = await db.matches.update_matches({
       match_id,
       match_date,
-      match_time,
-      referee_id: referee_id === "" ? null : referee_id,
-      field_id: field_id === "" ? null : field_id,
+      referee_id,
+      field_id,
     });
-    console.log(updatedMatch);
     res.status(200).send("se supone que ya jalo");
   } catch (e) {
     res.status(500).send(e);

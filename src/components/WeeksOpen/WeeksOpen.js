@@ -11,7 +11,7 @@ const WeeksOpen = (props) => {
     (e) => e.team_1_name === "Rest" || e.team_2_name === "Rest"
   );
 
-  const matchesNoRest = matches.push(matches.splice(indexOfRest, 1)[0]);
+  matches.push(matches.splice(indexOfRest, 1)[0]);
   // console.log(matchesNoRest);
 
   const matchesMap = matches.map((e) => {

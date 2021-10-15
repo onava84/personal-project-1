@@ -54,12 +54,9 @@ const MatchOpen = (props) => {
           </p>
           <p className="time-open">
             Time:{" "}
-            {props.match.match_time
+            {props.match.match_date
               ? // ? format(selectedDate, "HH:mm")
-                format(
-                  parse(props.match.match_time, "HH:mm:ss", new Date()),
-                  "p"
-                )
+                format(parseISO(props.match.match_date), "p")
               : "Not defined"}
           </p>
           <p className="time-open">

@@ -10,7 +10,7 @@ import InputLabel from "@mui/material/InputLabel";
 
 const FieldSelect = (props) => {
   const [fields, setFields] = useState([]);
-  const [field, setField] = useState("");
+  const [field, setField] = useState(props.defaultField);
 
   useEffect(() => {
     axios

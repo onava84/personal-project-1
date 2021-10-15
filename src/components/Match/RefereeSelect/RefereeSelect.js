@@ -10,7 +10,7 @@ import InputLabel from "@mui/material/InputLabel";
 
 const RefereeSelect = (props) => {
   const [referees, setReferees] = useState([]);
-  const [referee, setReferee] = useState("");
+  const [referee, setReferee] = useState(props.defaultReferee);
 
   useEffect(() => {
     axios
@@ -33,10 +33,7 @@ const RefereeSelect = (props) => {
       <MenuItem value={referee.referee_id}>{referee.referee_name}</MenuItem>
     );
   });
-
-  console.log(referees);
-  console.log(referee);
-
+  console.log(typeof referee);
   return (
     <Box mt={2}>
       <FormControl fullWidth>
