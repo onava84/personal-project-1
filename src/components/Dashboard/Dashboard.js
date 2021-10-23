@@ -52,41 +52,37 @@ const Dashboard = () => {
   return (
     <ResponsiveDrawer>
       <div>
-        {username ? (
-          <div>
-            <Typography variant="h4" color="secondary">
-              <Box fontWeight="fontWeightBold" mt={4}>
-                Dashboard
-              </Box>
-            </Typography>
-            {tournaments.length > 0 ? (
-              <div className="main-dashboard">{tournamentsMap}</div>
-            ) : (
-              <div>
-                <Box mt={4} mb={2}>
-                  <Typography
-                    variant="h5"
-                    style={{ fontWeight: "bold" }}
-                    color="secondary"
-                  >
-                    You don't have any tournament yet, let's create one!
-                  </Typography>
-                </Box>
-                <Button
-                  color="primary"
-                  variant="contained"
-                  size="large"
-                  disableElevation
-                  href="/#/create-tournament"
+        <div>
+          <Typography variant="h4" color="secondary">
+            <Box fontWeight="fontWeightBold" mt={4}>
+              Dashboard
+            </Box>
+          </Typography>
+          {tournaments.length > 0 ? (
+            <div className="main-dashboard">{tournamentsMap}</div>
+          ) : (
+            <div>
+              <Box mt={4} mb={2}>
+                <Typography
+                  variant="h5"
+                  style={{ fontWeight: "bold" }}
+                  color="secondary"
                 >
-                  Create new tournament
-                </Button>
-              </div>
-            )}
-          </div>
-        ) : (
-          <Login />
-        )}
+                  You don't have any tournament yet, let's create one!
+                </Typography>
+              </Box>
+              <Button
+                color="primary"
+                variant="contained"
+                size="large"
+                disableElevation
+                href="/#/create-tournament"
+              >
+                Create new tournament
+              </Button>
+            </div>
+          )}
+        </div>
       </div>
     </ResponsiveDrawer>
   );

@@ -19,6 +19,10 @@ import { Typography } from "@material-ui/core";
 import RefereeSelect from "./RefereeSelect/RefereeSelect";
 import FieldsSelect from "./Fields/FieldsSelect";
 import DateTimeSelect from "./DateTimeSelect/DateTimeSelect";
+import DisplayMatchData from "./DisplayMatchData/DisplayMatchData";
+import TeamOneVsTeamTwo from "./TeamOneVsTeamTwo/TeamOneVsTeamTwo";
+import ScheduleGameButton from "./ScheduleGameButton/ScheduleGameButton";
+import SetResultsButton from "./SetResultsButton/SetResultsButton";
 
 const useStyles = makeStyles({
   btn: {
@@ -27,274 +31,100 @@ const useStyles = makeStyles({
 });
 
 const Match = (props) => {
-  const [editOpen, setEditOpen] = useState(false);
   const [match, setMatch] = useState({});
   const [edit, setEdit] = useState(false);
   const [selectedReferee, setSelectedReferee] = useState(
     props.match.referee_id
   );
-  const [checked, setChecked] = useState(false);
   const [selectedField, setSelectedField] = useState(props.match.field_id);
   const [selectedDate, setSelectedDate] = useState(props.match.match_date);
+  const [teamOneGoals, setTeamOneGoals] = useState(props.match.team_1_goals);
+  const [teamTwoGoals, setTeamTwoGoals] = useState(props.match.team_2_goals);
   const classes = useStyles();
-
-  const [open, setOpen] = useState(false);
-  const [openRes, setOpenRes] = useState(false);
-  const handleOpenRes = () => setOpenRes(true);
-  const handleCloseRes = () => setOpenRes(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
   useEffect(() => {
     axios
       .get(`/api/matches/${props.match.match_id}`)
       .then((res) => {
-        const { data: matchData } = res;
-        // console.log(res.data);
-        setMatch(matchData);
+        const { data } = res;
+        setMatch(data);
       })
       .catch((e) => {
         console.log(e);
       });
   }, [edit]);
 
-  const clickHandler = () => {
-    setEditOpen(!editOpen);
-  };
-
-  const handleSaveClick = () => {
+  const handleSaveClickSchedule = () => {
     const updatedMatch = {
       match_date: selectedDate,
       referee_id: selectedReferee,
       field_id: selectedField,
+      team_1_goals: teamOneGoals,
+      team_2_goals: teamTwoGoals,
     };
-    console.log(updatedMatch);
     axios
       .put(`/api/matches/${match.match_id}`, updatedMatch)
       .then((res) => {
-        // console.log("se editaron la fecha y el horario");
         setEdit(!edit);
-        //
-        clickHandler();
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  const handleChange = (e) => {
-    setSelectedDate(e);
+
+  const resetDate = () => {
+    setSelectedDate(props.match.match_date);
   };
 
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "white",
-    border: "none",
-    boxShadow: 24,
-    borderRadius: "10px",
-    p: 4,
-  };
+  // const resetStateValues = () => {
+  //   setSelectedReferee(props.match.referee_id);
+  //   setSelectedField(props.match.field_id);
+  //   setSelectedDate(props.match.match_date);
+  //   setTeamOneGoals(props.match.team_1_goals);
+  //   setTeamTwoGoals(props.match.team_2_goals);
+  // };
 
-  const style2 = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 600,
-    bgcolor: "white",
-    border: "none",
-    boxShadow: 24,
-    borderRadius: "10px",
-    p: 4,
-  };
-
-  const saveAndClose = () => {
-    handleSaveClick();
-    handleClose();
-  };
-
-  const saveResultsAndClose = () => {
-    handleCloseRes();
-  };
-
-  const handleSwitchChange = (event) => {
-    setChecked(event.target.checked);
-  };
-
-  const scheduleModal = (
-    <Box sx={style}>
-      <Box>
-        <DateTimeSelect
-          defaultDate={selectedDate}
-          setSelectedDate={setSelectedDate}
-        />
-        <RefereeSelect
-          refereeSelection={setSelectedReferee}
-          tournamentId={match.tournament_id}
-          defaultReferee={selectedReferee}
-        />
-        <FieldsSelect
-          fieldSelection={setSelectedField}
-          tournamentId={props.match.tournament_id}
-          defaultField={selectedField}
-        />
-      </Box>
-      <Box mt={2} sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleClose}
-          disableElevation
-        >
-          Cerrar
-        </Button>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={saveAndClose}
-          disableElevation
-        >
-          Guardar
-        </Button>
-      </Box>
-    </Box>
-  );
-
-  const resultsModal = (
-    <Box sx={style2}>
-      <Box>
-        <FormGroup>
-          <FormControlLabel
-            control={<Switch defaultChecked />}
-            label="This game is already played"
-            checked={checked}
-            onChange={handleSwitchChange}
-            inputProps={{ "aria-label": "controlled" }}
-          />
-        </FormGroup>
-        <Box>
-          <Grid container spacing={1}>
-            <Grid item xs={5}>
-              <Box>
-                <Typography variant="h4" align="center">
-                  {match.team_1_name}
-                </Typography>
-              </Box>
-              <Box>
-                <Typography variant="h3" align="center">
-                  0
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid
-              item
-              xs={2}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Box>
-                <Typography variant="h2" align="center">
-                  -
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={5}>
-              <Box>
-                <Typography variant="h4" align="center">
-                  {match.team_2_name}
-                </Typography>
-              </Box>
-              <Box>
-                <Typography variant="h3" align="center">
-                  0
-                </Typography>
-              </Box>
-            </Grid>
-          </Grid>
-        </Box>
-      </Box>
-      <Box mt={2} sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleCloseRes}
-          disableElevation
-        >
-          Cerrar
-        </Button>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={saveResultsAndClose}
-          disableElevation
-        >
-          Guardar
-        </Button>
-      </Box>
-    </Box>
-  );
-
-  console.log(checked);
+  // console.log(
+  //   selectedField,
+  //   selectedReferee,
+  //   match.team_1_name,
+  //   match.team_2_name,
+  //   teamOneGoals,
+  //   teamTwoGoals
+  // );
 
   return (
     <div className="match-1">
       {match.team_1_name !== "Rest" && match.team_2_name !== "Rest" ? (
         <div>
-          <div className="teams-name">
-            {match.team_1_name} VS {match.team_2_name}
-          </div>
-          <p className="date">
-            Date:{" "}
-            {match.match_date
-              ? format(parseISO(match.match_date), "EEEE MMMM d yyyy")
-              : "Not defined"}
-          </p>
-          <p className="time">
-            Time:{" "}
-            {match.match_date
-              ? format(parseISO(match.match_date), "p")
-              : "Not defined"}
-          </p>
-          <p className="time">
-            Referee: {match.referee_name ? match.referee_name : "Not defined"}
-          </p>
-          <p className="time">
-            Field: {match.field_name ? match.field_name : "Not defined"}
-          </p>
-          <div className="picker">
-            <div>
-              <Box>
-                <ButtonGroup disableElevation variant="contained">
-                  <Button onClick={handleOpen} color="secondary">
-                    Schedule game
-                  </Button>
-                  <Button onClick={handleOpenRes}>Set results</Button>
-                </ButtonGroup>
-              </Box>
-              <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-              >
-                {scheduleModal}
-              </Modal>
-              <Modal
-                open={openRes}
-                onClose={handleCloseRes}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-              >
-                {resultsModal}
-              </Modal>
-            </div>
-          </div>
+          <TeamOneVsTeamTwo match={match} />
+          <DisplayMatchData match={match} />
+          <Box mb={1}>
+            <ScheduleGameButton
+              dbSelectedDate={props.match.match_date}
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+              selectedField={selectedField}
+              setSelectedField={setSelectedField}
+              selectedReferee={selectedReferee}
+              setSelectedReferee={setSelectedReferee}
+              tournamentId={match.tournament_id}
+              saveAndClose={handleSaveClickSchedule}
+              resetDate={resetDate}
+            />
+          </Box>
+          <Box>
+            <SetResultsButton
+              match={match}
+              teamOneGoals={teamOneGoals}
+              teamTwoGoals={teamTwoGoals}
+              setTeamOneGoals={setTeamOneGoals}
+              setTeamTwoGoals={setTeamTwoGoals}
+              tournamentId={match.tournament_id}
+              saveAndClose={handleSaveClickSchedule}
+              // resetStateValues={resetStateValues}
+            />
+          </Box>
         </div>
       ) : (
         <Box>

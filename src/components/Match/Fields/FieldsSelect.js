@@ -32,6 +32,9 @@ const FieldSelect = (props) => {
     return <MenuItem value={field.field_id}>{field.field_name}</MenuItem>;
   });
 
+  console.log(props.tournamentId);
+  console.log(props.defaultField);
+
   return (
     <Box mt={2}>
       <FormControl fullWidth>

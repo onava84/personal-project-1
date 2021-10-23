@@ -33,7 +33,8 @@ const RefereeSelect = (props) => {
       <MenuItem value={referee.referee_id}>{referee.referee_name}</MenuItem>
     );
   });
-  console.log(typeof referee);
+  console.log(props.defaultReferee);
+  console.log(props.tournamentId);
   return (
     <Box mt={2}>
       <FormControl fullWidth>

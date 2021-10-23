@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import { Box } from "@mui/system";
@@ -9,12 +9,19 @@ import TextField from "@mui/material/TextField";
 const DateTimeSelect = (props) => {
   const [selectedDateTime, setSelectedDateTime] = useState(props.defaultDate);
 
+  useEffect(() => {
+    setSelectedDateTime(props.dbSelectedDate);
+  }, [props.open]);
+
   const handleChange = (e) => {
     setSelectedDateTime(e);
     props.setSelectedDate(e);
   };
 
-  console.log(props.defaultDate);
+  // console.log(props.defaultDate);
+  // console.log(selectedDateTime);
+  // console.log(props.open);
+
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns} fullWidth>
       <Box mt={2}>

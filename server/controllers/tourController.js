@@ -275,20 +275,15 @@ const updateMatch = async (req, res) => {
   try {
     const db = req.app.get("db");
     const { match_id } = req.params;
-    const { match_date, referee_id, field_id } = req.body;
-    // console.log(typeof referee_id);
-    console.log(typeof match_id);
-    console.log(match_id);
-    console.log(typeof referee_id);
-    console.log(referee_id);
-    console.log(typeof field_id);
-    console.log(field_id);
-
+    const { match_date, referee_id, field_id, team_1_goals, team_2_goals } =
+      req.body;
     const updatedMatch = await db.matches.update_matches({
       match_id,
       match_date,
       referee_id,
       field_id,
+      team_1_goals,
+      team_2_goals,
     });
     res.status(200).send("se supone que ya jalo");
   } catch (e) {

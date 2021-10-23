@@ -40,6 +40,8 @@ const Tournament = (props) => {
     );
   });
 
+  console.log(matches);
+
   return (
     <div>
       <Typography variant="h4" color="secondary">
