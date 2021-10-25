@@ -28,6 +28,7 @@ const useStyles = makeStyles({
 
 const TournamentCard = (props) => {
   const classes = useStyles();
+
   const clickDelete = () => {
     axios.delete(`/api/tournament/${props.id}`).then((res) => {
       props.deleteTournament(props.id);

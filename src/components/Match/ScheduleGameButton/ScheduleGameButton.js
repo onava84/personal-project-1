@@ -25,15 +25,15 @@ const ScheduleGameButton = (props) => {
 
   const saveAndCloseModal = () => {
     props.saveAndClose();
-    props.resetDate();
     handleClose();
   };
 
-  const clickClose = () => {
+  const cancelAndReset = () => {
+    props.setSelectedDate(props.match.match_date);
+    props.setSelectedField(props.match.field_id);
+    props.setSelectedReferee(props.match.referee_id);
     handleClose();
   };
-
-  console.log(props.dbSelectedDate);
 
   const scheduleModal = (
     <Box sx={style}>
@@ -41,8 +41,6 @@ const ScheduleGameButton = (props) => {
         <DateTimeSelect
           defaultDate={props.selectedDate}
           setSelectedDate={props.setSelectedDate}
-          open={open}
-          dbSelectedDate={props.dbSelectedDate}
         />
         <RefereeSelect
           refereeSelection={props.setSelectedReferee}
@@ -59,7 +57,7 @@ const ScheduleGameButton = (props) => {
         <Button
           variant="contained"
           color="primary"
-          onClick={clickClose}
+          onClick={cancelAndReset}
           disableElevation
         >
           Close
@@ -82,6 +80,7 @@ const ScheduleGameButton = (props) => {
         Schedule Game
       </Button>
       <Modal
+        onBackdropClick={cancelAndReset}
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"

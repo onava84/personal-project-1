@@ -72,10 +72,6 @@ const Match = (props) => {
       });
   };
 
-  const resetDate = () => {
-    setSelectedDate(props.match.match_date);
-  };
-
   // const resetStateValues = () => {
   //   setSelectedReferee(props.match.referee_id);
   //   setSelectedField(props.match.field_id);
@@ -93,6 +89,8 @@ const Match = (props) => {
   //   teamTwoGoals
   // );
 
+  console.log(match);
+
   return (
     <div className="match-1">
       {match.team_1_name !== "Rest" && match.team_2_name !== "Rest" ? (
@@ -101,6 +99,7 @@ const Match = (props) => {
           <DisplayMatchData match={match} />
           <Box mb={1}>
             <ScheduleGameButton
+              match={match}
               dbSelectedDate={props.match.match_date}
               selectedDate={selectedDate}
               setSelectedDate={setSelectedDate}
@@ -110,7 +109,6 @@ const Match = (props) => {
               setSelectedReferee={setSelectedReferee}
               tournamentId={match.tournament_id}
               saveAndClose={handleSaveClickSchedule}
-              resetDate={resetDate}
             />
           </Box>
           <Box>

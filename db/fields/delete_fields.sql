@@ -1,2 +1,2 @@
-DELETE FROM tournaments
+DELETE FROM fields
 WHERE tournament_id = ${id};

@@ -9,18 +9,10 @@ import TextField from "@mui/material/TextField";
 const DateTimeSelect = (props) => {
   const [selectedDateTime, setSelectedDateTime] = useState(props.defaultDate);
 
-  useEffect(() => {
-    setSelectedDateTime(props.dbSelectedDate);
-  }, [props.open]);
-
   const handleChange = (e) => {
     setSelectedDateTime(e);
     props.setSelectedDate(e);
   };
-
-  // console.log(props.defaultDate);
-  // console.log(selectedDateTime);
-  // console.log(props.open);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns} fullWidth>

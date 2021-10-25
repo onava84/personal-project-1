@@ -264,8 +264,10 @@ const deleteTournament = async (req, res) => {
     const { id } = req.params;
     await db.matches.delete_matches({ id });
     await db.teams.delete_teams({ id });
+    await db.referees.delete_referees({ id });
+    await db.fields.delete_fields({ id });
     await db.tournaments.delete_tournament({ id });
-    res.sendStatus(200);
+    res.status(200).send("aqui se supone que ya se elimino");
   } catch (e) {
     res.status(500).send(e);
   }
