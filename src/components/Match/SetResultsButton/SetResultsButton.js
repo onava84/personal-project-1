@@ -8,6 +8,7 @@ import TeamOneVsTeamTwo from "../TeamOneVsTeamTwo/TeamOneVsTeamTwo";
 import { Grid } from "@mui/material";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import Switch from "@mui/material/Switch";
 
 const style = {
   position: "absolute",
@@ -28,6 +29,8 @@ const SetResultsButton = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
+  /////SWITCHER STATE
+  const [checked, setChecked] = useState(props.played);
   /////
   const [teamOneScore, setTeamOneScore] = useState(props.teamOneGoals);
   const [teamTwoScore, setTeamTwoScore] = useState(props.teamTwoGoals);
@@ -35,7 +38,8 @@ const SetResultsButton = (props) => {
   useEffect(() => {
     props.setTeamOneGoals(teamOneScore);
     props.setTeamTwoGoals(teamTwoScore);
-  }, [teamOneScore, teamTwoScore]);
+    props.setPlayed(checked);
+  }, [teamOneScore, teamTwoScore, checked]);
 
   const handleRemove = (state, setScoreState) => {
     if (state >= 1) {
@@ -57,12 +61,29 @@ const SetResultsButton = (props) => {
   const cancelAndReset = () => {
     setTeamOneScore(props.match.team_1_goals);
     setTeamTwoScore(props.match.team_2_goals);
+    setChecked(props.match.played);
     // props.resetStateValues();
     handleClose();
   };
 
+  ////SWITCHER CHANGE
+  const switcherChange = (event) => {
+    setChecked(event.target.checked);
+    props.setPlayed(event.target.checked);
+  };
+
+  // console.log(props.match);
+  // console.log(props.played);
+
   const setResultsModal = (
     <Box sx={style}>
+      <Box>
+        <Switch
+          checked={checked}
+          onChange={switcherChange}
+          inputProps={{ "aria-label": "controlled" }}
+        />
+      </Box>
       <Box sx={{ display: "flex", justifyContent: "space-evenly" }}>
         <Grid container spacing={2}>
           <Grid item xs={5}>

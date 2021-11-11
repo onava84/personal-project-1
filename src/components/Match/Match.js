@@ -40,6 +40,7 @@ const Match = (props) => {
   const [selectedDate, setSelectedDate] = useState(props.match.match_date);
   const [teamOneGoals, setTeamOneGoals] = useState(props.match.team_1_goals);
   const [teamTwoGoals, setTeamTwoGoals] = useState(props.match.team_2_goals);
+  const [played, setPlayed] = useState(props.match.played);
   const classes = useStyles();
 
   useEffect(() => {
@@ -59,8 +60,9 @@ const Match = (props) => {
       match_date: selectedDate,
       referee_id: selectedReferee,
       field_id: selectedField,
-      team_1_goals: teamOneGoals,
-      team_2_goals: teamTwoGoals,
+      team_1_goals: !played ? 0 : teamOneGoals,
+      team_2_goals: !played ? 0 : teamTwoGoals,
+      played,
     };
     axios
       .put(`/api/matches/${match.match_id}`, updatedMatch)
@@ -70,26 +72,8 @@ const Match = (props) => {
       .catch((err) => {
         console.log(err);
       });
+    ////axios llamando un endpoint donde se va a editar la tabla
   };
-
-  // const resetStateValues = () => {
-  //   setSelectedReferee(props.match.referee_id);
-  //   setSelectedField(props.match.field_id);
-  //   setSelectedDate(props.match.match_date);
-  //   setTeamOneGoals(props.match.team_1_goals);
-  //   setTeamTwoGoals(props.match.team_2_goals);
-  // };
-
-  // console.log(
-  //   selectedField,
-  //   selectedReferee,
-  //   match.team_1_name,
-  //   match.team_2_name,
-  //   teamOneGoals,
-  //   teamTwoGoals
-  // );
-
-  console.log(match);
 
   return (
     <div className="match-1">
@@ -120,6 +104,8 @@ const Match = (props) => {
               setTeamTwoGoals={setTeamTwoGoals}
               tournamentId={match.tournament_id}
               saveAndClose={handleSaveClickSchedule}
+              played={played}
+              setPlayed={setPlayed}
               // resetStateValues={resetStateValues}
             />
           </Box>

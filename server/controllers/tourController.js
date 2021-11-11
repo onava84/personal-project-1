@@ -277,8 +277,14 @@ const updateMatch = async (req, res) => {
   try {
     const db = req.app.get("db");
     const { match_id } = req.params;
-    const { match_date, referee_id, field_id, team_1_goals, team_2_goals } =
-      req.body;
+    const {
+      match_date,
+      referee_id,
+      field_id,
+      team_1_goals,
+      team_2_goals,
+      played,
+    } = req.body;
     const updatedMatch = await db.matches.update_matches({
       match_id,
       match_date,
@@ -286,6 +292,7 @@ const updateMatch = async (req, res) => {
       field_id,
       team_1_goals,
       team_2_goals,
+      played,
     });
     res.status(200).send("se supone que ya jalo");
   } catch (e) {
