@@ -29,6 +29,7 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
+    "firebase": "^9.4.1",
     "knex": "^0.95.10",
     "massive": "^6.9.1",
     "moment": "^2.29.1",

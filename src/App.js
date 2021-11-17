@@ -20,6 +20,7 @@ import SingleTournament from "./components/SingleTournament/SingleTournament";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import NewPasswordInput from "./components/NewPassword/NewPasswordInput";
 import DashboardNavbar from "./components/NewDashboard/NewNavbar/NewNavbar";
+import TournamentStats from "./components/TournamentStats/TournamentStats";
 // import ResponsiveDrawer from "./components/NewDashboard/Drawer/Drawer";
 
 const theme = createTheme({
@@ -70,6 +71,7 @@ function App() {
             <Route path="/tournaments" component={Tournaments} />
             <Route path="/reset-password-request" component={ResetPassword} />
             <Route path="/new-password/:id" component={NewPasswordInput} />
+            <Route path="/tournament-table/:id" component={TournamentStats} />
           </Switch>
           {/* <DashboardNavbar /> */}
         </div>
