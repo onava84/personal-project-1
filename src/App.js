@@ -21,6 +21,7 @@ import ResetPassword from "./components/ResetPassword/ResetPassword";
 import NewPasswordInput from "./components/NewPassword/NewPasswordInput";
 import DashboardNavbar from "./components/NewDashboard/NewNavbar/NewNavbar";
 import TournamentStats from "./components/TournamentStats/TournamentStats";
+import { auth } from "./firebase/firebase.utils";
 // import ResponsiveDrawer from "./components/NewDashboard/Drawer/Drawer";
 
 const theme = createTheme({
@@ -41,43 +42,63 @@ const theme = createTheme({
   },
 });
 
-function App() {
-  const apodo = "Nava";
-  const dispatch = useDispatch();
+class App extends React.Component {
+  constructor() {
+    super();
 
-  useEffect(() => {
-    axios.get("/auth/user").then((response) => {
-      dispatch(updateUsername(response.data.username));
-      dispatch(updateUserId(response.data.id));
+    this.state = {
+      currentUser: null,
+    };
+  }
+
+  unsuscribedFromAuth = null;
+
+  componentDidMount() {
+    this.unsuscribedFromAuth = auth.onAuthStateChanged((user) => {
+      this.setState({ currentUser: user });
+
+      console.log(user);
     });
-  }, []);
+  }
 
-  const prueba = "este es string";
-  const paDashboard = "este string va para dashboard";
-  console.log(window.location.pathname);
-  return (
-    <ThemeProvider theme={theme}>
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <div className="App">
-          <SimpleMenu />
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/dashboard" component={Dashboard} />
-            <Route path="/create-tournament" component={CreateTournament} />
-            <Route path="/register" component={Register} />
-            <Route path="/login" component={Login} />
-            <Route path="/admin/tournaments/:id" component={Tournament} />
-            <Route path="/tournaments/:id" component={SingleTournament} />
-            <Route path="/tournaments" component={Tournaments} />
-            <Route path="/reset-password-request" component={ResetPassword} />
-            <Route path="/new-password/:id" component={NewPasswordInput} />
-            <Route path="/tournament-table/:id" component={TournamentStats} />
-          </Switch>
-          {/* <DashboardNavbar /> */}
-        </div>
-      </MuiPickersUtilsProvider>
-    </ThemeProvider>
-  );
+  componentWillUnmount() {
+    this.unsubscribeFromAuth();
+  }
+
+  render() {
+    return (
+      <ThemeProvider theme={theme}>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <div className="App">
+            <SimpleMenu />
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route path="/dashboard" component={Dashboard} />
+              <Route path="/create-tournament" component={CreateTournament} />
+              <Route path="/register" component={Register} />
+              <Route path="/login" component={Login} />
+              <Route path="/admin/tournaments/:id" component={Tournament} />
+              <Route path="/tournaments/:id" component={SingleTournament} />
+              <Route path="/tournaments" component={Tournaments} />
+              <Route path="/reset-password-request" component={ResetPassword} />
+              <Route path="/new-password/:id" component={NewPasswordInput} />
+              <Route path="/tournament-table/:id" component={TournamentStats} />
+            </Switch>
+            {/* <DashboardNavbar /> */}
+          </div>
+        </MuiPickersUtilsProvider>
+      </ThemeProvider>
+    );
+  }
+  // const apodo = "Nava";
+  // const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   axios.get("/auth/user").then((response) => {
+  //     dispatch(updateUsername(response.data.username));
+  //     dispatch(updateUserId(response.data.id));
+  //   });
+  // }, []);
 }
 
 export default App;
