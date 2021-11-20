@@ -11,8 +11,6 @@ import { makeStyles } from "@material-ui/core";
 import Link from "@material-ui/core/Link";
 import { Alert } from "@material-ui/lab";
 
-import { signInWithGoogle } from "../../firebase/firebase.utils";
-
 const useStyles = makeStyles({
   field: {
     // display: "inline",
@@ -139,18 +137,6 @@ const Login = (props) => {
                 // onClick={console.log(authInfo)}
               >
                 Submit
-              </Button>
-              <Button
-                className={classes.btn}
-                onClick={signInWithGoogle}
-                variant="contained"
-                color="primary"
-                size="large"
-                disableElevation
-                fullWidth
-                // onClick={console.log(authInfo)}
-              >
-                Sign in with Google
               </Button>
               <Typography>Hello</Typography>
               <Typography style={{ textAlign: "right", fontSize: 14 }}>

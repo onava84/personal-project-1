@@ -2,18 +2,9 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import TournamentResult from "../TournamentResult/TournamentResult";
 import { Typography, Box, TextField } from "@material-ui/core";
-import { useAuth0 } from "@auth0/auth0-react";
 import "./Tournaments.css";
 
 const Tournaments = (props) => {
-  const { user, isAuthenticated } = useAuth0();
-  if (!isAuthenticated) {
-    props.history.push("/register");
-  }
-
-  console.log(isAuthenticated);
-  console.log(user);
-
   const [tournaments, setTournaments] = useState([]);
 
   useEffect(() => {

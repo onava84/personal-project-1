@@ -2,9 +2,6 @@ import React from "react";
 import "./Home.css";
 import { Button } from "@material-ui/core";
 import SimpleMenu from "../NavBar/NavBar";
-import LoginButton from "../LoginButton";
-import LogoutButton from "../LogoutButton";
-import Profile from "../Profile";
 
 const Home = (props) => {
   return (
@@ -29,9 +26,6 @@ const Home = (props) => {
               >
                 Sign up
               </Button>
-              <LoginButton />
-              <LogoutButton />
-              <Profile />
             </div>
           </div>
           <div className="right-container"></div>

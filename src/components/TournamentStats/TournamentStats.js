@@ -11,6 +11,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { useSelector } from "react-redux";
 
 function createData(pos, name, Pts, PJ, PG, PP, PE, DG, GF, GC) {
   return { pos, name, Pts, PJ, PG, PP, PE, DG, GF, GC };
@@ -39,7 +40,9 @@ const rows = [
   createData(15, "Gingerbread", 356, 16.0, 49, 3.9),
 ];
 
-function TournamentStats(props) {
+const TournamentStats = (props) => {
+  const username = useSelector((reduxState) => reduxState.username);
+
   useEffect(() => {
     axios
       .get(`/api/tournament-table/${props.match.params.id}`)
@@ -50,6 +53,8 @@ function TournamentStats(props) {
         console.log(e);
       });
   }, []);
+
+  console.log(username);
 
   return (
     <Box>
@@ -124,6 +129,6 @@ function TournamentStats(props) {
       </Container>
     </Box>
   );
-}
+};
 
 export default TournamentStats;

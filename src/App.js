@@ -21,7 +21,6 @@ import ResetPassword from "./components/ResetPassword/ResetPassword";
 import NewPasswordInput from "./components/NewPassword/NewPasswordInput";
 import DashboardNavbar from "./components/NewDashboard/NewNavbar/NewNavbar";
 import TournamentStats from "./components/TournamentStats/TournamentStats";
-import { auth } from "./firebase/firebase.utils";
 // import ResponsiveDrawer from "./components/NewDashboard/Drawer/Drawer";
 
 const theme = createTheme({
@@ -49,20 +48,6 @@ class App extends React.Component {
     this.state = {
       currentUser: null,
     };
-  }
-
-  unsuscribedFromAuth = null;
-
-  componentDidMount() {
-    this.unsuscribedFromAuth = auth.onAuthStateChanged((user) => {
-      this.setState({ currentUser: user });
-
-      console.log(user);
-    });
-  }
-
-  componentWillUnmount() {
-    this.unsubscribeFromAuth();
   }
 
   render() {
