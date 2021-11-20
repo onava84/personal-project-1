@@ -10,6 +10,8 @@ import Tournaments from "./components/Tournaments/Tournaments";
 import SingleTournament from "./components/SingleTournament/SingleTournament";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import NewPasswordInput from "./components/NewPassword/NewPasswordInput";
+import TournamentStats from "./components/TournamentStats/TournamentStats";
+import LoginButton from "./components/LoginButton";
 
 export default (
   <Switch>
@@ -25,5 +27,6 @@ export default (
     <Route path="/tournaments" component={Tournaments} />
     <Route path="/reset-password-request" component={ResetPassword} />
     <Route path="/new-password/:id" component={NewPasswordInput} />
+    <Route path="/tournament-table/:id" component={TournamentStats} />
   </Switch>
 );

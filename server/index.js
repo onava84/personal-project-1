@@ -27,6 +27,7 @@ const {
   getTourReferees,
   getMatchReferee,
   getFields,
+  getTournamentTable,
 } = require("./controllers/tourController");
 const app = express();
 
@@ -94,6 +95,8 @@ app.post("/api/referees"); //to add one refe
 //fields
 app.get("/api/fields", getFields); //get all referees
 app.get("/api/fields");
+
+app.get("/api/tournament-table/:id", getTournamentTable);
 
 app.listen(SERVER_PORT, () =>
   console.log(`server running on port ${SERVER_PORT}`)

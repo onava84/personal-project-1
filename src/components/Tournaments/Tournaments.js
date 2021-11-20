@@ -4,7 +4,7 @@ import TournamentResult from "../TournamentResult/TournamentResult";
 import { Typography, Box, TextField } from "@material-ui/core";
 import "./Tournaments.css";
 
-const Tournaments = () => {
+const Tournaments = (props) => {
   const [tournaments, setTournaments] = useState([]);
 
   useEffect(() => {
