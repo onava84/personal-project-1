@@ -43,16 +43,16 @@ const rows = [
 const TournamentStats = (props) => {
   const username = useSelector((reduxState) => reduxState.username);
 
-  useEffect(() => {
-    axios
-      .get(`/api/tournament-table/${props.match.params.id}`)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get(`/api/tournament-table/${props.match.params.id}`)
+  //     .then((res) => {
+  //       console.log(res.data);
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //     });
+  // }, []);
 
   console.log(username);
 

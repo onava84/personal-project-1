@@ -11,22 +11,42 @@ import SingleTournament from "./components/SingleTournament/SingleTournament";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import NewPasswordInput from "./components/NewPassword/NewPasswordInput";
 import TournamentStats from "./components/TournamentStats/TournamentStats";
-import LoginButton from "./components/LoginButton";
+import { ProtectedRoutes } from "./components/ProtectedRoutes";
 
 export default (
   <Switch>
     <Route exact path="/">
       <Home />
     </Route>
-    <Route path="/dashboard" component={Dashboard} />
-    <Route path="/create-tournament" component={CreateTournament} />
-    <Route path="/register" component={Register} />
-    <Route path="/login" component={Login} />
-    <Route path="/admin/tournaments/:id" component={Tournament} />
-    <Route path="/tournaments/:id" component={SingleTournament} />
-    <Route path="/tournaments" component={Tournaments} />
-    <Route path="/reset-password-request" component={ResetPassword} />
-    <Route path="/new-password/:id" component={NewPasswordInput} />
-    <Route path="/tournament-table/:id" component={TournamentStats} />
+    <Route path="/dashboard">
+      <Dashboard />
+    </Route>
+    <Route path="/create-tournament">
+      <CreateTournament />
+    </Route>
+    <Route path="/register">
+      <Register />
+    </Route>
+    <Route path="/login">
+      <Login />
+    </Route>
+    <Route path="/admin/tournaments/id">
+      <Tournament />
+    </Route>
+    <Route path="/tournaments/:id">
+      <SingleTournament />
+    </Route>
+    <Route path="/tournaments">
+      <Tournaments />
+    </Route>
+    <Route path="/reset-password-request">
+      <ResetPassword />
+    </Route>
+    <Route path="/new-password/:id">
+      <NewPasswordInput />
+    </Route>
+    <Route path="/tournament-table/:id">
+      <TournamentStats />
+    </Route>
   </Switch>
 );

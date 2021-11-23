@@ -138,7 +138,6 @@ const Login = (props) => {
               >
                 Submit
               </Button>
-              <Typography>Hello</Typography>
               <Typography style={{ textAlign: "right", fontSize: 14 }}>
                 <Link href="/#/reset-password-request" variant="body2">
                   I forgot my password

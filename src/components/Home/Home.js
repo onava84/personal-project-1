@@ -1,7 +1,7 @@
 import React from "react";
 import "./Home.css";
 import { Button } from "@material-ui/core";
-import SimpleMenu from "../NavBar/NavBar";
+// import SimpleMenu from "../NavBar/NavBar";
 
 const Home = (props) => {
   return (

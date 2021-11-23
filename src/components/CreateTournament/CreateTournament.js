@@ -14,6 +14,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
+import { withRouter } from "react-router-dom";
 
 const useStyles = makeStyles({
   btn: {
@@ -26,7 +27,8 @@ const useStyles = makeStyles({
 
 const CreateTournament = (props) => {
   const classes = useStyles();
-  const username = useSelector((reduxState) => reduxState.username);
+  // const username = useSelector((reduxState) => reduxState.username);
+  // const username = useSelector((reduxState) => reduxState.username);
   const [tournamentNameField, setTournamentNameField] = useState("");
   const [teams, setTeams] = useState([
     {
@@ -42,10 +44,7 @@ const CreateTournament = (props) => {
       teamName: "",
     },
   ]);
-  // const [tournamentId, setTournamentId] = useState(0);
-  // const [showError, setShowError] = useState(false);
   const [showTeamsNumError, setShowTeamsNumError] = useState(false);
-  // const userId = useSelector((reduxState) => reduxState.id);
   const [tournamentNameError, setTournamentNameError] = useState(false);
   const [teamsError, setTeamsError] = useState(false);
   const [value, setValue] = useState("single");
@@ -281,4 +280,4 @@ const CreateTournament = (props) => {
   );
 };
 
-export default CreateTournament;
+export default withRouter(CreateTournament);
