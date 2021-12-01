@@ -6,7 +6,6 @@ import axios from "axios";
 import TournamentCard from "../TournamentCard/TournamentCard";
 import "./Dashboard.css";
 // import { Typography } from "@material-ui/core";
-import Login from "../Login/Login";
 // import ResponsiveDrawer from "../NewDashboard/Drawer/Drawer";
 // import Loader from "../Loader/Loader";
 

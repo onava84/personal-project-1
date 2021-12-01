@@ -10,7 +10,7 @@ import { createTheme, ThemeProvider } from "@material-ui/core";
 // import SimpleMenu from "./components/NavBar/NavBar";
 import { Switch, Route } from "react-router-dom";
 import Home from "./components/Home/Home";
-import CreateTournament from "./components/CreateTournament/CreateTournament";
+// import CreateTournament from "./components/CreateTournament/CreateTournament";
 import Register from "./components/Register/Register";
 import Login from "./components/Login/Login";
 import Dashboard from "./components/Dashboard/Dashboard";
@@ -22,8 +22,8 @@ import NewPasswordInput from "./components/NewPassword/NewPasswordInput";
 import DashboardNavbar from "./components/NewDashboard/NewNavbar/NewNavbar";
 import TournamentStats from "./components/TournamentStats/TournamentStats";
 import routes from "./routes";
-import { ProtectedRoutes } from "./components/ProtectedRoutes";
 // import ResponsiveDrawer from "./components/NewDashboard/Drawer/Drawer";
+import CreateTournament from "./components/CreateTournament/CreateTournament";
 
 const theme = createTheme({
   palette: {
@@ -44,19 +44,18 @@ const theme = createTheme({
 });
 
 const App = () => {
-  // const [currentUser, setCurrentUser] = useState(false);
-  const username = useSelector((reduxState) => reduxState.username);
+  // const [userId, setUserId] = useState();
   const dispatch = useDispatch();
 
   useEffect(() => {
     axios.get("/auth/user").then((response) => {
       dispatch(updateUserId(response.data.id));
+      dispatch(updateUsername(response.data.username));
       // setUserId(response.data.id);
     });
   }, []);
-
   // render() {
-  console.log(username);
+  // console.log(userId);
   return (
     <ThemeProvider theme={theme}>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -64,12 +63,7 @@ const App = () => {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/dashboard" component={Dashboard} />
-            {/* <Route path="/create-tournament" component={CreateTournament} /> */}
-            <ProtectedRoutes
-              path="/create-tournament"
-              component={CreateTournament}
-              isAuth={username}
-            />
+            <Route path="/create-tournament" component={CreateTournament} />
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
             <Route path="/admin/tournaments/:id" component={Tournament} />

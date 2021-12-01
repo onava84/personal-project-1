@@ -11,7 +11,6 @@ import SingleTournament from "./components/SingleTournament/SingleTournament";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import NewPasswordInput from "./components/NewPassword/NewPasswordInput";
 import TournamentStats from "./components/TournamentStats/TournamentStats";
-import { ProtectedRoutes } from "./components/ProtectedRoutes";
 
 export default (
   <Switch>

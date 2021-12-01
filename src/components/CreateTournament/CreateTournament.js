@@ -14,7 +14,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
-import { withRouter } from "react-router-dom";
+// import { withRouter } from "react-router-dom";
 
 const useStyles = makeStyles({
   btn: {
@@ -280,4 +280,4 @@ const CreateTournament = (props) => {
   );
 };
 
-export default withRouter(CreateTournament);
+export default CreateTournament;
