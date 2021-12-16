@@ -55,10 +55,18 @@ app.use(
   })
 );
 
+const isAuthenticated = (req, res, next) => {
+  if (req.session.user) {
+    next();
+  } else {
+    res.status(404).send("This is for registered users only");
+  }
+};
+
 // Auth endpoints
 app.post("/auth/register", register);
 app.post("/auth/login", login);
-app.delete("/auth/logout", logout);
+app.delete("/auth/logout", isAuthenticated, logout);
 app.get("/auth/user", getUser);
 app.post("/auth/resetpassword", resetPassword);
 app.get("/auth/verifyemail/:id", getUserIdVerify);
@@ -67,30 +75,30 @@ app.post("/auth/updatepassword", updatePassword);
 
 // Functionality endpoints
 // For admin users
-app.get("/api/tournaments", getTournaments);
-app.get("/api/tournament/:id", getSingleTournament);
-app.post("/api/tournament", createTournament);
+app.get("/api/tournaments", isAuthenticated, getTournaments);
+app.get("/api/tournament/:id", isAuthenticated, getSingleTournament);
+app.post("/api/tournament", isAuthenticated, createTournament);
 app.put("/api/tournament");
-app.delete("/api/tournament/:id", deleteTournament);
+app.delete("/api/tournament/:id", isAuthenticated, deleteTournament);
 //For any user
 // app.get("/api/tournament/:id", getSingleTournamentAlUsers);
 app.get("/api/alltournaments", getAllTournaments);
 app.get("/api/allmatches", getMatchesAllUsers);
 app.get("/api/allmatches/:match_id", getSingleMatch);
 
-app.post("/api/teams", createTeam);
+app.post("/api/teams", isAuthenticated, createTeam);
 // app.delete("/api/teams/:id", deleteTournament);
 // app.post("/api/teams", createTeam)
 
-app.post("/api/matches", createMatches);
+app.post("/api/matches", isAuthenticated, createMatches);
 app.get("/api/matches", getMatches);
-app.put("/api/matches/:match_id", updateMatch);
-app.get("/api/matches/:match_id", getSingleMatch);
+app.put("/api/matches/:match_id", isAuthenticated, updateMatch);
+app.get("/api/matches/:match_id", isAuthenticated, getSingleMatch);
 // app.delete("/api/matches/:tournament_id", deleteMatches);
 
 //referees
-app.get("/api/referees", getTourReferees); // get all referees
-app.get("/api/match-referee/:referee_id", getMatchReferee); //get specific referee
+app.get("/api/referees", isAuthenticated, getTourReferees); // get all referees
+app.get("/api/match-referee/:referee_id", isAuthenticated, getMatchReferee); //get specific referee
 app.post("/api/referees"); //to add one refe
 //fields
 app.get("/api/fields", getFields); //get all referees

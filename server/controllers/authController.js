@@ -56,6 +56,7 @@ const login = async (req, res) => {
     const { username, password } = req.body;
     const selected = await db.auth.get_user_by_username({ username });
     const user = selected[0];
+    // console.log(` este es el user que estara en req.session.user ${user.id}`);
     if (user) {
       const areEqual = await bcrypt.compare(password, user.password);
       if (areEqual) {
@@ -101,7 +102,7 @@ const resetPassword = async (req, res) => {
         from: "support1@mytournament.online",
         subject: "Password Recovery",
         html: `<body>
-        <p>Click to set a new password : <a href="http://localhost:3000/#/new-password/${id}">Reset password</a></p>
+        <p>Click to set a new password : <a href="http://localhost:3000/new-password/${id}">Reset password</a></p>
 
         </body>`,
       };

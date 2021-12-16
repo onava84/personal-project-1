@@ -30,9 +30,14 @@ const TournamentCard = (props) => {
   const classes = useStyles();
 
   const clickDelete = () => {
-    axios.delete(`/api/tournament/${props.id}`).then((res) => {
-      props.deleteTournament(props.id);
-    });
+    axios
+      .delete(`/api/tournament/${props.id}`)
+      .then((res) => {
+        props.deleteTournament(props.id);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   return (

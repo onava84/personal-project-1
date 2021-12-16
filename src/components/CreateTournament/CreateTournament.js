@@ -87,13 +87,18 @@ const CreateTournament = (props) => {
       teams_number: teams.length % 2 === 0 ? teams.length : teams.length + 1,
       tournament_type: value,
     };
-    axios.post("/api/tournament", newObj).then((response) => {
-      // console.log(response);
-      const id = response.data[0].tournament_id;
-      // setTournamentId(id);
-      //create a list/array of promises
-      createTeamNamesFromTournament(id, value);
-    });
+    axios
+      .post("/api/tournament", newObj)
+      .then((response) => {
+        // console.log(response);
+        const id = response.data[0].tournament_id;
+        // setTournamentId(id);
+        //create a list/array of promises
+        createTeamNamesFromTournament(id, value);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   const createTeamNamesFromTournament = (id, tournament_type) => {

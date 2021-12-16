@@ -13,17 +13,17 @@ import Home from "./components/Home/Home";
 // import CreateTournament from "./components/CreateTournament/CreateTournament";
 import Register from "./components/Register/Register";
 import Login from "./components/Login/Login";
-import Dashboard from "./components/Dashboard/Dashboard";
 import Tournament from "./components/Tournament/Tournament";
 import Tournaments from "./components/Tournaments/Tournaments";
 import SingleTournament from "./components/SingleTournament/SingleTournament";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import NewPasswordInput from "./components/NewPassword/NewPasswordInput";
-import DashboardNavbar from "./components/NewDashboard/NewNavbar/NewNavbar";
 import TournamentStats from "./components/TournamentStats/TournamentStats";
 import routes from "./routes";
-// import ResponsiveDrawer from "./components/NewDashboard/Drawer/Drawer";
 import CreateTournament from "./components/CreateTournament/CreateTournament";
+import Dashboard from "./components/Dashboard/Dashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Navbar from "./components/Navbar.js/Navbar";
 
 const theme = createTheme({
   palette: {
@@ -44,37 +44,48 @@ const theme = createTheme({
 });
 
 const App = () => {
-  // const [userId, setUserId] = useState();
+  const [userId, setUserId] = useState(true);
   const dispatch = useDispatch();
+  const [auth, setAuth] = useState(false);
 
   useEffect(() => {
     axios.get("/auth/user").then((response) => {
       dispatch(updateUserId(response.data.id));
       dispatch(updateUsername(response.data.username));
-      // setUserId(response.data.id);
+      console.log(response.data.id);
+      setUserId(response.data.id);
     });
   }, []);
   // render() {
-  // console.log(userId);
+  console.log(userId);
+
   return (
     <ThemeProvider theme={theme}>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <div className="App">
+          <Navbar />
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route path="/dashboard" component={Dashboard} />
-            <Route path="/create-tournament" component={CreateTournament} />
+            {/* <Route path="/dashboard" component={Dashboard} /> */}
+            <ProtectedRoute path="/dashboard">
+              <Dashboard />
+            </ProtectedRoute>
+            {/* <Route path="/create-tournament" component={CreateTournament} /> */}
+            <ProtectedRoute exact path="/create-tournament">
+              <CreateTournament />
+            </ProtectedRoute>
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
-            <Route path="/admin/tournaments/:id" component={Tournament} />
+            {/* <Route path="/admin/tournaments/:id" component={Tournament} /> */}
+            <ProtectedRoute exact path="/admin/tournaments/:id">
+              <Tournament />
+            </ProtectedRoute>
             <Route path="/tournaments/:id" component={SingleTournament} />
             <Route path="/tournaments" component={Tournaments} />
             <Route path="/reset-password-request" component={ResetPassword} />
             <Route path="/new-password/:id" component={NewPasswordInput} />
             <Route path="/tournament-table/:id" component={TournamentStats} />
           </Switch>
-          {/* {routes} */}
-          {/* <DashboardNavbar /> */}
         </div>
       </MuiPickersUtilsProvider>
     </ThemeProvider>

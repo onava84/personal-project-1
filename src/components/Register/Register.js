@@ -209,7 +209,7 @@ const Register = (props) => {
                 color="secondary"
               >
                 If you have an account{" "}
-                <Link href="/#/login" variant="body2">
+                <Link href="/login" variant="body2">
                   login here
                 </Link>
               </Typography>

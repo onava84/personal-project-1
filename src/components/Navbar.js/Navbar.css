@@ -1,0 +1,26 @@
+.main-navbar {
+  background-color: #294b7a;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+}
+
+.menu-items {
+  display: flex;
+}
+
+.menu-items a:link {
+  color: white;
+  text-decoration: none;
+  font-weight: 800;
+  margin-left: 30px;
+}
+
+.menu-items li a:visited {
+  color: white;
+  text-decoration: none;
+}
+
+.not-show {
+  display: none;
+}

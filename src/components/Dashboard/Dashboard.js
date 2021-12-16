@@ -5,12 +5,8 @@ import { Box, Button, Typography, Container } from "@material-ui/core";
 import axios from "axios";
 import TournamentCard from "../TournamentCard/TournamentCard";
 import "./Dashboard.css";
-// import { Typography } from "@material-ui/core";
-// import ResponsiveDrawer from "../NewDashboard/Drawer/Drawer";
-// import Loader from "../Loader/Loader";
 
 const Dashboard = () => {
-  const username = useSelector((reduxState) => reduxState.username);
   const [tournaments, setTournaments] = useState([]);
   const [change, setChange] = useState(false);
   // const [loading,setLoading] = useState(true);
@@ -45,8 +41,6 @@ const Dashboard = () => {
     );
   });
 
-  console.log(username);
-
   return (
     <div>
       <Typography variant="h4" color="secondary">
@@ -72,7 +66,7 @@ const Dashboard = () => {
             variant="contained"
             size="large"
             disableElevation
-            href="/#/create-tournament"
+            href="/create-tournament"
           >
             Create new tournament
           </Button>

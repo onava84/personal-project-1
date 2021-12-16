@@ -3,22 +3,24 @@ import axios from "axios";
 import "./Tournament.css";
 import Weeks from "../Weeks/Weeks";
 import { Typography, Box } from "@material-ui/core";
+import { useParams } from "react-router-dom";
 
 const Tournament = (props) => {
   const [matches, setMatches] = useState([]);
+  const params = useParams();
   // const [weekArray, setWeekArray] = useState([]);
-
+  console.log(params);
   useEffect(() => {
     axios
-      .get(`/api/matches?tournament_id=${props.match.params.id}`)
+      .get(`/api/matches?tournament_id=${params.id}`)
       .then((res) => {
         // console.log(res.data.sort());
         setMatches(res.data);
       })
       .catch((e) => console.log(e));
-  }, [props.match.params.id]);
+  }, [params.id]);
 
-  // console.log(matches);
+  console.log(props);
   let weeksLong = 0;
   const tourName = matches.length > 0 ? matches[0].tournament_name : null;
   if (matches.length > 0) {

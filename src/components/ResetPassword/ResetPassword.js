@@ -138,7 +138,7 @@ const ResetPassword = (props) => {
                 color="secondary"
               >
                 If you don't have an account{" "}
-                <Link href="/#/register" variant="body2">
+                <Link href="/register" variant="body2">
                   register here
                 </Link>
               </Typography>

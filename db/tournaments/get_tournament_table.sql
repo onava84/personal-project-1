@@ -1,7 +1,8 @@
-select team_name "TEAM",sum(Points) "POINTS",sum(played) as "MATCHES PLAYED",
-sum(WinCount) "MATCHES WON",sum(LostCount) "LOST MATCHES",sum(Tie) "TIED MATCHES",
-sum("Goals in Favour") "GOALS IN FAVOUR",
-sum("Goals Against") "GOALS AGAINST"
+select team_name "TEAM",sum(Points) "POINTS",sum(played) as "MATCHES_PLAYED",
+sum(WinCount) "MATCHES_WON",sum(LostCount) "LOST_MATCHES",sum(Tie) "TIED_MATCHES",
+sum("Goals in Favour") "GOALS_IN_FAVOUR",
+sum("Goals Against") "GOALS_AGAINST",
+sum("Goals in Favour"-"Goals Against") as "Goals_Difference"
 from
 (
 
@@ -12,12 +13,12 @@ select t.team_name
 ,count(*) FILTER (WHERE team_1_goals= team_2_goals) AS Tie
 ,(((count(*) FILTER (WHERE team_1_goals> team_2_goals))*3)+count(*) FILTER (WHERE team_1_goals= team_2_goals)) as Points
 ,sum(team_1_goals) as "Goals in Favour"
-,sum(team_2_goals) as "Goals Against"
+,sum(team_2_goals) as "Goals Against",1
 
 
 from matches m inner join teams t
 on m.team_1=t.team_id
-where m.played='t' and m.tournament_id=346
+where m.played='t' and m.tournament_id=${id}
 group by t.team_name
 
 union
@@ -29,7 +30,7 @@ select t.team_name
 ,count(*) FILTER (WHERE team_1_goals= team_2_goals) AS Tie
 ,(((count(*) FILTER (WHERE team_1_goals< team_2_goals))*3)+count(*) FILTER (WHERE team_1_goals= team_2_goals)) as Points
 ,sum(team_2_goals) as "Goals in Favour"
-,sum(team_1_goals) as "Goals Against"
+,sum(team_1_goals) as "Goals Against",2
 
 
 from matches m inner join teams t
@@ -38,9 +39,9 @@ where m.played='t' and m.tournament_id=${id}
 group by t.team_name
 
 )sub
-group by team_name;
-
--- ------
+group by team_name
+order by "POINTS" desc,"Goals_Difference" desc,"GOALS_IN_FAVOUR" desc;
+-------
 -- select team_name "TEAM",sum(Points) "POINTS",sum(played) as "MATCHES PLAYED",
 -- sum(WinCount) "MATCHES WON",sum(LostCount) "LOST MATCHES",sum(Tie) "TIED MATCHES",
 -- sum("Goals in Favour") "GOALS IN FAVOUR",
@@ -61,7 +62,7 @@ group by team_name;
 
 -- from matches m inner join teams t
 -- on m.team_1=t.team_id
--- where m.played='t' and m.tournament_id=351
+-- where m.played='t' and m.tournament_id=${id}
 -- group by t.team_name
 
 -- union
@@ -78,9 +79,55 @@ group by team_name;
 
 -- from matches m inner join teams t
 -- on m.team_2=t.team_id
--- where m.played='t' and m.tournament_id=351
+-- where m.played='t' and m.tournament_id=${id}
 -- group by t.team_name
 
 -- )sub
 -- group by team_name
 -- order by "POINTS" desc,"Goals Difference" desc,"GOALS IN FAVOUR" desc;
+
+-----
+
+-- select team_name "TEAM",sum(Points) "POINTS",sum(played) as "MATCHES PLAYED",
+-- sum(WinCount) "MATCHES WON",sum(LostCount) "LOST MATCHES",sum(Tie) "TIED MATCHES",
+-- sum("Goals in Favour") "GOALS IN FAVOUR",
+-- sum("Goals Against") "GOALS AGAINST"
+-- from
+-- (
+
+-- select t.team_name
+-- ,count(*) AS Played
+-- ,count(*) FILTER (WHERE team_1_goals> team_2_goals) AS WinCount
+-- ,count(*) FILTER (WHERE team_1_goals< team_2_goals) AS LostCount
+-- ,count(*) FILTER (WHERE team_1_goals= team_2_goals) AS Tie
+-- ,(((count(*) FILTER (WHERE team_1_goals> team_2_goals))*3)+count(*) FILTER (WHERE team_1_goals= team_2_goals)) as Points
+-- ,sum(team_1_goals) as "Goals in Favour"
+-- ,sum(team_2_goals) as "Goals Against"
+
+
+-- from matches m inner join teams t
+-- on m.team_1=t.team_id
+-- where m.played='t' and m.tournament_id=346
+-- group by t.team_name
+
+-- union
+
+-- select t.team_name
+-- ,count(*) AS Played
+-- ,count(*) FILTER (WHERE team_1_goals< team_2_goals) AS WinCount
+-- ,count(*) FILTER (WHERE team_1_goals> team_2_goals) AS LostCount
+-- ,count(*) FILTER (WHERE team_1_goals= team_2_goals) AS Tie
+-- ,(((count(*) FILTER (WHERE team_1_goals< team_2_goals))*3)+count(*) FILTER (WHERE team_1_goals= team_2_goals)) as Points
+-- ,sum(team_2_goals) as "Goals in Favour"
+-- ,sum(team_1_goals) as "Goals Against"
+
+
+-- from matches m inner join teams t
+-- on m.team_2=t.team_id
+-- where m.played='t' and m.tournament_id=${id}
+-- group by t.team_name
+
+-- )sub
+-- group by team_name;
+
+-- ------

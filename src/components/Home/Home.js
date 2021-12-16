@@ -22,7 +22,7 @@ const Home = (props) => {
                 sive="large"
                 variant="contained"
                 color="secondary"
-                href="/#/register"
+                href="/register"
               >
                 Sign up
               </Button>
