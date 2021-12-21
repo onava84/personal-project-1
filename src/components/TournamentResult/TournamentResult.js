@@ -22,9 +22,18 @@ const TournamentResult = (props) => {
         >
           See Schedule
         </Button>
-        <Button to={`/tournament-table/${props.id}`} component={Link}>
-          See table
-        </Button>
+        <Box sx={{ marginLeft: "20px" }}>
+          <Button
+            color="secondary"
+            variant="contained"
+            size="large"
+            disableElevation
+            to={`/tournament-table/${props.id}`}
+            component={Link}
+          >
+            See table
+          </Button>
+        </Box>
       </div>
     </div>
   );

@@ -44,48 +44,53 @@ const theme = createTheme({
 });
 
 const App = () => {
-  const [userId, setUserId] = useState(true);
+  const [userId, setUserId] = useState(false);
+  const [isPending, setIsPending] = useState(true);
   const dispatch = useDispatch();
-  const [auth, setAuth] = useState(false);
-
+  // console.log(userId);
   useEffect(() => {
     axios.get("/auth/user").then((response) => {
+      // console.log(response);
       dispatch(updateUserId(response.data.id));
+      setIsPending(false);
       dispatch(updateUsername(response.data.username));
-      console.log(response.data.id);
+      // console.log(response.data.id);
       setUserId(response.data.id);
     });
   }, []);
-  // render() {
-  console.log(userId);
-
+  const inStore = useSelector((store) => store.userId);
+  console.log(inStore);
   return (
     <ThemeProvider theme={theme}>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <div className="App">
           <Navbar />
-          <Switch>
-            <Route exact path="/" component={Home} />
-            {/* <Route path="/dashboard" component={Dashboard} /> */}
-            <ProtectedRoute path="/dashboard">
-              <Dashboard />
-            </ProtectedRoute>
-            {/* <Route path="/create-tournament" component={CreateTournament} /> */}
-            <ProtectedRoute exact path="/create-tournament">
-              <CreateTournament />
-            </ProtectedRoute>
-            <Route path="/register" component={Register} />
-            <Route path="/login" component={Login} />
-            {/* <Route path="/admin/tournaments/:id" component={Tournament} /> */}
-            <ProtectedRoute exact path="/admin/tournaments/:id">
-              <Tournament />
-            </ProtectedRoute>
-            <Route path="/tournaments/:id" component={SingleTournament} />
-            <Route path="/tournaments" component={Tournaments} />
-            <Route path="/reset-password-request" component={ResetPassword} />
-            <Route path="/new-password/:id" component={NewPasswordInput} />
-            <Route path="/tournament-table/:id" component={TournamentStats} />
-          </Switch>
+          {!isPending ? (
+            <Switch>
+              <Route exact path="/" component={Home} />
+              {/* <Route path="/dashboard" component={Dashboard} /> */}
+
+              <ProtectedRoute path="/dashboard">
+                <Dashboard />
+              </ProtectedRoute>
+
+              {/* <Route path="/create-tournament" component={CreateTournament} /> */}
+              <ProtectedRoute path="/create-tournament">
+                <CreateTournament />
+              </ProtectedRoute>
+              <Route path="/register" component={Register} />
+              <Route path="/login" component={Login} />
+              {/* <Route path="/admin/tournaments/:id" component={Tournament} /> */}
+              <ProtectedRoute exact path="/admin/tournaments/:id">
+                <Tournament />
+              </ProtectedRoute>
+              <Route path="/tournaments/:id" component={SingleTournament} />
+              <Route path="/tournaments" component={Tournaments} />
+              <Route path="/reset-password-request" component={ResetPassword} />
+              <Route path="/new-password/:id" component={NewPasswordInput} />
+              <Route path="/tournament-table/:id" component={TournamentStats} />
+            </Switch>
+          ) : null}
         </div>
       </MuiPickersUtilsProvider>
     </ThemeProvider>
