@@ -30,7 +30,7 @@ const {
   getTournamentTable,
 } = require("./controllers/tourController");
 const app = express();
-
+const PORT = SERVER_PORT || 6600;
 app.use(express.json());
 
 // Massive setup
@@ -106,6 +106,4 @@ app.get("/api/fields");
 
 app.get("/api/tournament-table/:id", getTournamentTable);
 
-app.listen(SERVER_PORT, () =>
-  console.log(`server running on port ${SERVER_PORT}`)
-);
+app.listen(PORT, () => console.log(`server running on port ${PORT}`));
