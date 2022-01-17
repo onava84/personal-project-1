@@ -29,7 +29,7 @@ export default (
     <Route path="/login">
       <Login />
     </Route>
-    <Route path="/admin/tournaments/id">
+    <Route path="/admin/tournaments/:id">
       <Tournament />
     </Route>
     <Route path="/tournaments/:id">

@@ -42,7 +42,7 @@ const ScheduleGameButton = (props) => {
           defaultDate={props.selectedDate}
           setSelectedDate={props.setSelectedDate}
         />
-        <RefereeSelect
+        {/* <RefereeSelect
           refereeSelection={props.setSelectedReferee}
           tournamentId={props.tournamentId}
           defaultReferee={props.selectedReferee}
@@ -51,7 +51,7 @@ const ScheduleGameButton = (props) => {
           fieldSelection={props.setSelectedField}
           tournamentId={props.tournamentId}
           defaultField={props.selectedField}
-        />
+        /> */}
       </Box>
       <Box mt={2} sx={{ display: "flex", justifyContent: "space-between" }}>
         <Button

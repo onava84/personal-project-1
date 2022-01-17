@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import WeeksOpen from "../WeeksOpen/WeeksOpen";
 import "./SingleTournament.css";
-import { Typography, Box } from "@material-ui/core";
+import { Typography, Box, Button, Container, Grid } from "@material-ui/core";
 // import { Box } from "@material-ui/core";
 
 const SingleTournament = (props) => {
@@ -31,24 +31,44 @@ const SingleTournament = (props) => {
   // console.log(weeks.length);
   const weeksMap = weeks.map((e, i, a) => {
     return (
-      <WeeksOpen
-        matches={matches.filter((match) => match.week_playing === i + 1)}
-        week={i + 1}
-        key={i}
-      />
+      <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
+        <WeeksOpen
+          matches={matches.filter((match) => match.week_playing === i + 1)}
+          week={i + 1}
+          key={i}
+        />
+      </Grid>
     );
   });
 
+  const linkToTable = `/tournament-table/${props.match.params.id}`;
+
   return (
-    <div>
+    <Container>
       {/* <p>Nombre del torneo:</p> */}
       <Typography variant="h4" color="secondary" fontWeight="fontWeightBold">
         <Box fontWeight="fontWeightBold" mt={4}>
           {tourName}
         </Box>
+        <Box mt={4} mb={4}>
+          <Button
+            variant="contained"
+            size="large"
+            color="primary"
+            disableElevation
+            // fullWidth
+            href={linkToTable}
+            type="submit"
+          >
+            See tournament table
+          </Button>
+        </Box>
       </Typography>
-      <div className="main-tournament-page">{weeksMap}</div>
-    </div>
+      {/* <div className="main-tournament-page">{weeksMap}</div> */}
+      <Grid container direction="row" spacing={3}>
+        {weeksMap}
+      </Grid>
+    </Container>
   );
 };
 

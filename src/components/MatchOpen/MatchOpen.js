@@ -59,7 +59,7 @@ const MatchOpen = (props) => {
                 format(parseISO(props.match.match_date), "p")
               : "Not defined"}
           </p>
-          <p className="time-open">
+          {/* <p className="time-open">
             Field:{" "}
             {props.match.field_name !== null
               ? props.match.field_name
@@ -70,7 +70,7 @@ const MatchOpen = (props) => {
             {props.match.referee_name !== null
               ? props.match.referee_name
               : "Not defined"}
-          </p>
+          </p> */}
         </div>
       )}
     </div>
