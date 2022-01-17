@@ -2,7 +2,7 @@
   border: solid 1px gray;
   border-radius: 5px;
   padding: 30px;
-  margin: 30px;
+  /* margin: 30px; */
   flex-basis: 1;
 }
 
@@ -16,9 +16,9 @@
   align-items: center;
 }
 
-@media screen and (max-width: 700px) {
+/* @media screen and (max-width: 700px) {
   .displayed-card {
     width: 100%;
     margin: 20px;
   }
-}
+} */

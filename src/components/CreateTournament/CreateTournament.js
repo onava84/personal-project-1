@@ -14,6 +14,8 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
+import { useHistory } from "react-router";
+
 // import { withRouter } from "react-router-dom";
 
 const useStyles = makeStyles({
@@ -26,6 +28,7 @@ const useStyles = makeStyles({
 });
 
 const CreateTournament = (props) => {
+  let history = useHistory();
   const classes = useStyles();
   // const username = useSelector((reduxState) => reduxState.username);
   // const username = useSelector((reduxState) => reduxState.username);
@@ -119,7 +122,8 @@ const CreateTournament = (props) => {
           .post("/api/matches", matches)
           .then(() => {
             console.log("post matches axios was called");
-            props.history.push("/dashboard");
+            // props.history.push("/dashboard");
+            history.push("/dashboard");
           })
           .catch(() =>
             console.log(

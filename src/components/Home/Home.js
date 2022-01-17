@@ -59,9 +59,6 @@ const Home = (props) => {
           </div>
         </div>
       </div>
-      <div>
-        <p>Hey</p>
-      </div>
     </div>
   );
 };
